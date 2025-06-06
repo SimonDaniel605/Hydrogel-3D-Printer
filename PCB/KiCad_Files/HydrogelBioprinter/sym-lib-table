@@ -1,0 +1,5 @@
+(sym_lib_table
+  (version 7)
+  (lib (name "MAX6675ISA_")(type "KiCad")(uri "C:/Users/Simon/Projects/Hydrogel-3D-Printer/PCB/KiCad_Files/Library/MAX6675ISA_/MAX6675ISA_.kicad_sym")(options "")(descr ""))
+  (lib (name "RFP30N06LE")(type "KiCad")(uri "C:/Users/Simon/Projects/Hydrogel-3D-Printer/PCB/KiCad_Files/Library/RFP30N06LE/RFP30N06LE.kicad_sym")(options "")(descr ""))
+)
