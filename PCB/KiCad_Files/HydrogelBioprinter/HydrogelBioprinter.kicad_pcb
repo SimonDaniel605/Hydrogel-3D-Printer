@@ -279,7 +279,7 @@
 	(footprint "MAX6675ISA_:SOIC127P600X175-8N"
 		(layer "F.Cu")
 		(uuid "17f63202-9265-42eb-bb02-acefed9bc1d3")
-		(at 15.095 44.295)
+		(at 84.18 101.97)
 		(property "Reference" "U6"
 			(at -0.795 -3.332 0)
 			(layer "F.SilkS")
@@ -649,7 +649,7 @@
 	(footprint "Diode_SMD:D_SMA"
 		(layer "F.Cu")
 		(uuid "21b66745-4e6e-4744-90eb-0455a25e0cb9")
-		(at 23.4 37.295)
+		(at 92.485 94.97)
 		(descr "Diode SMA (DO-214AC)")
 		(tags "Diode SMA (DO-214AC)")
 		(property "Reference" "D5"
@@ -922,7 +922,7 @@
 	(footprint "Diode_SMD:D_SMA"
 		(layer "F.Cu")
 		(uuid "275c19a0-6aea-4a01-a6e5-a6807c93a712")
-		(at 23.4 32.745)
+		(at 92.485 90.42)
 		(descr "Diode SMA (DO-214AC)")
 		(tags "Diode SMA (DO-214AC)")
 		(property "Reference" "D4"
@@ -1195,7 +1195,7 @@
 	(footprint "MAX6675ISA_:SOIC127P600X175-8N"
 		(layer "F.Cu")
 		(uuid "2e4736ae-b7af-4d27-bf38-416fca5e05d4")
-		(at 15.095 37.745)
+		(at 84.18 95.42)
 		(property "Reference" "U5"
 			(at -0.795 -3.332 0)
 			(layer "F.SilkS")
@@ -1565,7 +1565,7 @@
 	(footprint "MAX6675ISA_:SOIC127P600X175-8N"
 		(layer "F.Cu")
 		(uuid "3d57b238-b8d0-40e9-9497-edfabe5b7bc7")
-		(at 15.095 24.645)
+		(at 84.18 82.32)
 		(property "Reference" "U3"
 			(at -0.795 -3.332 0)
 			(layer "F.SilkS")
@@ -1935,7 +1935,7 @@
 	(footprint "Package_QFP:LQFP-100_14x14mm_P0.5mm"
 		(layer "F.Cu")
 		(uuid "43582663-7bc0-4f9f-a99e-2896eeaa3d49")
-		(at 36.675 30.625)
+		(at 105.76 88.3)
 		(descr "LQFP, 100 Pin (https://www.nxp.com/docs/en/package-information/SOT407-1.pdf), generated with kicad-footprint-generator ipc_gullwing_generator.py")
 		(tags "LQFP QFP")
 		(property "Reference" "U1"
@@ -3358,7 +3358,7 @@
 	(footprint "RFP30N06LE:TRANS_RFP30N06LE"
 		(layer "F.Cu")
 		(uuid "6233656f-6eab-4e24-97c2-680e283ed5fd")
-		(at 33.235 43.635)
+		(at 102.32 101.31)
 		(property "Reference" "Q1"
 			(at -2.368715 -3.891095 0)
 			(layer "F.SilkS")
@@ -3665,7 +3665,7 @@
 	(footprint "Diode_SMD:D_SMA"
 		(layer "F.Cu")
 		(uuid "65768387-066c-44af-bcab-9b7607e6c75f")
-		(at 23.4 41.845)
+		(at 92.485 99.52)
 		(descr "Diode SMA (DO-214AC)")
 		(tags "Diode SMA (DO-214AC)")
 		(property "Reference" "D6"
@@ -3938,7 +3938,7 @@
 	(footprint "Capacitor_SMD:CP_Elec_6.3x7.7"
 		(layer "F.Cu")
 		(uuid "6b146db6-7f7f-4528-9b2b-a6a7e068aced")
-		(at 4.725 25.445)
+		(at 73.81 83.12)
 		(descr "SMD capacitor, aluminum electrolytic, Nichicon, 6.3x7.7mm")
 		(tags "capacitor electrolytic")
 		(property "Reference" "C20"
@@ -4368,7 +4368,7 @@
 	(footprint "Module:Pololu_Breakout-16_15.2x20.3mm"
 		(layer "F.Cu")
 		(uuid "7f609996-b428-4653-b2fe-93d9eb456588")
-		(at 68.715 1.545)
+		(at 137.8 59.22)
 		(descr "Pololu Breakout 16-pin 15.2x20.3mm 0.6x0.8\\")
 		(tags "Pololu Breakout")
 		(property "Reference" "A5"
@@ -4817,7 +4817,7 @@
 	(footprint "Module:Pololu_Breakout-16_15.2x20.3mm"
 		(layer "F.Cu")
 		(uuid "827ea042-46ad-4827-887c-ef3dd7a3a460")
-		(at 1.555 1.545)
+		(at 70.64 59.22)
 		(descr "Pololu Breakout 16-pin 15.2x20.3mm 0.6x0.8\\")
 		(tags "Pololu Breakout")
 		(property "Reference" "A1"
@@ -5266,7 +5266,7 @@
 	(footprint "Module:Pololu_Breakout-16_15.2x20.3mm"
 		(layer "F.Cu")
 		(uuid "87290744-2690-42ad-86e5-9cb1480dbfd8")
-		(at 35.135 1.545)
+		(at 104.22 59.22)
 		(descr "Pololu Breakout 16-pin 15.2x20.3mm 0.6x0.8\\")
 		(tags "Pololu Breakout")
 		(property "Reference" "A3"
@@ -5715,7 +5715,7 @@
 	(footprint "Capacitor_SMD:CP_Elec_6.3x7.7"
 		(layer "F.Cu")
 		(uuid "8c1cfc97-477d-44ff-a7b2-28fccc475343")
-		(at 4.725 49.895)
+		(at 73.81 107.57)
 		(descr "SMD capacitor, aluminum electrolytic, Nichicon, 6.3x7.7mm")
 		(tags "capacitor electrolytic")
 		(property "Reference" "C23"
@@ -6145,7 +6145,7 @@
 	(footprint "Capacitor_SMD:CP_Elec_6.3x7.7"
 		(layer "F.Cu")
 		(uuid "93a82f30-a1da-41a8-9fb2-302be9ca1c6d")
-		(at 4.725 33.595)
+		(at 73.81 91.27)
 		(descr "SMD capacitor, aluminum electrolytic, Nichicon, 6.3x7.7mm")
 		(tags "capacitor electrolytic")
 		(property "Reference" "C21"
@@ -6575,7 +6575,7 @@
 	(footprint "Package_SO:SOP-16_3.9x9.9mm_P1.27mm"
 		(layer "F.Cu")
 		(uuid "a19be2ad-89d1-4b9f-a3ce-e1d3d194679c")
-		(at 31.695 52.725)
+		(at 100.78 110.4)
 		(descr "SOP, 16 Pin (https://www.diodes.com/assets/Datasheets/PAM8403.pdf), generated with kicad-footprint-generator ipc_gullwing_generator.py")
 		(tags "SOP SO")
 		(property "Reference" "U7"
@@ -7038,7 +7038,7 @@
 	(footprint "Capacitor_SMD:CP_Elec_6.3x7.7"
 		(layer "F.Cu")
 		(uuid "bacc40bb-6f81-4c89-a6ae-7c276557a80e")
-		(at 4.725 41.745)
+		(at 73.81 99.42)
 		(descr "SMD capacitor, aluminum electrolytic, Nichicon, 6.3x7.7mm")
 		(tags "capacitor electrolytic")
 		(property "Reference" "C22"
@@ -7468,7 +7468,7 @@
 	(footprint "Module:Pololu_Breakout-16_15.2x20.3mm"
 		(layer "F.Cu")
 		(uuid "cb67ee09-fddc-4d2e-9182-59fb0540e375")
-		(at 18.345 1.545)
+		(at 87.43 59.22)
 		(descr "Pololu Breakout 16-pin 15.2x20.3mm 0.6x0.8\\")
 		(tags "Pololu Breakout")
 		(property "Reference" "A2"
@@ -7917,7 +7917,7 @@
 	(footprint "Capacitor_SMD:CP_Elec_6.3x7.7"
 		(layer "F.Cu")
 		(uuid "d69738fe-8908-42dd-a3dd-934a100a0130")
-		(at 4.725 58.045)
+		(at 73.81 115.72)
 		(descr "SMD capacitor, aluminum electrolytic, Nichicon, 6.3x7.7mm")
 		(tags "capacitor electrolytic")
 		(property "Reference" "C24"
@@ -8347,7 +8347,7 @@
 	(footprint "Diode_SMD:D_SMA"
 		(layer "F.Cu")
 		(uuid "da0f0725-4d5a-4dec-b368-52b69ca0c853")
-		(at 23.4 28.195)
+		(at 92.485 85.87)
 		(descr "Diode SMA (DO-214AC)")
 		(tags "Diode SMA (DO-214AC)")
 		(property "Reference" "D3"
@@ -8620,7 +8620,7 @@
 	(footprint "MAX6675ISA_:SOIC127P600X175-8N"
 		(layer "F.Cu")
 		(uuid "f1337f1e-b555-42fb-90db-dcb9353b23e3")
-		(at 15.095 31.195)
+		(at 84.18 88.87)
 		(property "Reference" "U4"
 			(at -0.795 -3.332 0)
 			(layer "F.SilkS")
@@ -8990,7 +8990,7 @@
 	(footprint "Diode_SMD:D_SMA"
 		(layer "F.Cu")
 		(uuid "fb579dbc-3aa2-4432-aee2-33fc25ec48bd")
-		(at 23.4 23.645)
+		(at 92.485 81.32)
 		(descr "Diode SMA (DO-214AC)")
 		(tags "Diode SMA (DO-214AC)")
 		(property "Reference" "D2"
@@ -9263,7 +9263,7 @@
 	(footprint "Module:Pololu_Breakout-16_15.2x20.3mm"
 		(layer "F.Cu")
 		(uuid "ffeeb343-a3e3-486a-92a1-c7a76904d94d")
-		(at 51.925 1.545)
+		(at 121.01 59.22)
 		(descr "Pololu Breakout 16-pin 15.2x20.3mm 0.6x0.8\\")
 		(tags "Pololu Breakout")
 		(property "Reference" "A4"
