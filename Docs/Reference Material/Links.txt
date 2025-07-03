@@ -1,0 +1,5 @@
+MKS Drivers:
+https://github.com/makerbase-mks/MKS-StepStick-Driver/tree/master
+
+Micro SD Reference:
+https://arduino.stackexchange.com/questions/84630/proper-micro-sd-card-schematic
