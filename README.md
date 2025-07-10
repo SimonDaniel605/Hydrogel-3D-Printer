@@ -8,6 +8,4 @@ Name: Simon Craig DANIEL
 
 Student Number: 25848887
 
-Supervisor: Mr. Wayne Swart
-
 Company: Stellenbosch University
