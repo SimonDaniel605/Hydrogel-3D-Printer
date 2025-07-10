@@ -9,4 +9,5 @@
   (lib (name "LM5116MHX_NOPB")(type "KiCad")(uri "C:/Users/Simon/Projects/Hydrogel-3D-Printer/Hardware/PCB/KiCad_Files/Library/LM5116MHX_NOPB/LM5116MHX_NOPB.kicad_sym")(options "")(descr ""))
   (lib (name "SN74HC245DWR")(type "KiCad")(uri "C:/Users/Simon/Projects/Hydrogel-3D-Printer/Hardware/PCB/KiCad_Files/Library/SN74HC245DWR/SN74HC245DWR.kicad_sym")(options "")(descr ""))
   (lib (name "AP3211KTR-G1")(type "KiCad")(uri "C:/Users/Simon/Projects/Hydrogel-3D-Printer/Hardware/PCB/KiCad_Files/Library/AP3211KTR-G1/AP3211KTR-G1.kicad_sym")(options "")(descr ""))
+  (lib (name "AOD4185")(type "KiCad")(uri "C:/Users/Simon/Projects/Hydrogel-3D-Printer/Hardware/PCB/KiCad_Files/Library/AOD4185/AOD4185.kicad_sym")(options "")(descr ""))
 )

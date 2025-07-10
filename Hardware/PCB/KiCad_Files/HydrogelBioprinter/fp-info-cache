@@ -1,4 +1,18 @@
-25601074588778895
+25613333520672753
+AOD4185
+TO-252-3_L6.6-W6.1-P4.57-LS9.9-BR-CW
+
+
+0
+3
+3
+AP3211KTR-G1
+AP3211KTR-G1
+
+
+0
+6
+6
 Audio_Module
 Reverb_BTDR-1H
 Digital Reverberation Unit, http://www.belton.co.kr/inc/downfile.php?seq=17&file=pdf (footprint from http://www.uk-electronic.de/PDF/BTDR-1.pdf)
@@ -67864,6 +67878,20 @@ Yellow 5381 Series LED
 0
 2
 2
+LM5116MHX_NOPB
+SOP65P640X110-21N
+
+
+0
+21
+21
+M24C64-WMN6TP
+SOIC127P600X175-8N
+
+
+0
+8
+8
 MAX6675ISA_
 SOIC127P600X175-8N
 
@@ -67871,6 +67899,13 @@ SOIC127P600X175-8N
 0
 8
 8
+MMBT4403_
+SOT23-BEC
+<b>TO-236</b> ITT Intermetall
+
+0
+3
+3
 Module
 A20_OLINUXINO_LIME2
 A20 Olinuxino LIME2, 1.2GHz, 512-1024MB RAM, Micro-SD, NAND or eMMC, 1000Mbit Ethernet
@@ -93757,6 +93792,13 @@ rotary encoder illuminated switch vertical
 0
 9
 8
+SN74HC245DWR
+SOIC127P1030X265-20N
+
+
+0
+20
+20
 Sensor
 ASAIR_AM2302_P2.54mm_Lead2.75mm_TabDown
 Temperature and humidity module, http://akizukidenshi.com/download/ds/aosong/AM2302.pdf
@@ -95850,6 +95892,13 @@ Logo WEEE
 0
 0
 0
+TF-SMD_TF-015
+TF-SMD_TF-015
+
+
+0
+15
+13
 TMUX1208PWR
 SOP65P640X120-16N
 
