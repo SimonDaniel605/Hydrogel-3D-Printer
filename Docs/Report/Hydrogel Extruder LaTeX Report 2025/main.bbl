@@ -1,0 +1,146 @@
+\begin{thebibliography}{14}
+\expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
+\expandafter\ifx\csname bibnamefont\endcsname\relax
+  \def\bibnamefont#1{#1}\fi
+\expandafter\ifx\csname bibfnamefont\endcsname\relax
+  \def\bibfnamefont#1{#1}\fi
+\expandafter\ifx\csname citenamefont\endcsname\relax
+  \def\citenamefont#1{#1}\fi
+\expandafter\ifx\csname url\endcsname\relax
+  \def\url#1{\texttt{#1}}\fi
+\providecommand{\selectlanguage}[1]{\relax}
+\edef\AFRstr{\string afrikaans}
+\ifx\AFRstr\languagename
+   \input{stb-bib.afr}%
+ \else
+   \input{stb-bib.eng}%
+\fi
+\newcommand{\Capitalize}[1]{\uppercase{#1}}
+\newcommand{\capitalize}[1]{\expandafter\Capitalize#1}
+\providecommand{\eprint}[2][]{\url{#2}}
+
+\bibitem[{\citenamefont{Adhikari}
+  \emph{\bbletal{}}(2021)\citenamefont{Adhikari}, \citenamefont{Stinson},
+  \citenamefont{Osmond}, \citenamefont{Evans} \protect\BIBand{}
+  \citenamefont{Krebs}}]{adhikari2021photoinduced}
+\bibnamefont{Adhikari}, \bibfnamefont{B.}, \bibnamefont{Stinson},
+  \bibfnamefont{B.S.}, \bibnamefont{Osmond}, \bibfnamefont{M.J.},
+  \bibnamefont{Evans}, \bibfnamefont{K.S.} \protect\BIBand{}
+  \bibnamefont{Krebs}, \bibfnamefont{M.D.} (2021 \bblnov{}).
+\newblock Photoinduced gelatin-methacrylate scaffolds to examine the impact of
+  extracellular environment on trabecular meshwork cells.
+\newblock \emph{Industrial \& Engineering Chemistry Research}, \bblvol{}~60,
+  \bblno{}~47, \bblpp{} 17128--17137.
+\newline\bblurlpre\url{https://doi.org/10.1021/acs.iecr.1c02828}
+
+\bibitem[{\citenamefont{Brikov} \emph{\bbletal{}}(2016)\citenamefont{Brikov},
+  \citenamefont{Markin}, \citenamefont{Sukhoverkhov} \protect\BIBand{}
+  \citenamefont{Avramenko}}]{brikov_2016}
+\bibnamefont{Brikov}, \bibfnamefont{A.}, \bibnamefont{Markin},
+  \bibfnamefont{A.}, \bibnamefont{Sukhoverkhov}, \bibfnamefont{S.}
+  \protect\BIBand{} \bibnamefont{Avramenko}, \bibfnamefont{V.} (2016).
+\newblock Rheological properties of poly(ethylene glycol) solutions and gels.
+\newblock \emph{Doklady Physical Chemistry}, \bblvol{} 469, \bblno{}~2,
+  \bblpp{} 121--123.
+
+\bibitem[{\citenamefont{CELLINK}(2020)}]{cellink_gelma_2020}
+\bibnamefont{CELLINK} (2020 \bbloct{}).
+\newblock \emph{GelMA Lyophilizate Specification Sheet}.
+\newblock CELLINK.
+\newblock Version 5, Ref No: SPS-VL350000. Approved by MG, VK.
+\newline\bblurlpre\url{https://www.cellink.com/wp-content/uploads/2022/03/Specification-Sheet-GelMA-Lyophilizate\_2-Oct-2020.pdf}
+
+\bibitem[{\citenamefont{CELLINK}(2025)}]{biox_brochure}
+\bibnamefont{CELLINK} (2025).
+\newblock The bio x series: Defining the standard in bioprinting.
+\newblock Accessed: 2025-06-02.
+\newline\bblurlpre\url{https://www.cellink.com/wp-content/uploads/2025/05/BIO-X-Series-Brochure\_31.03.25\_DIGITAL.pdf}
+
+\bibitem[{\citenamefont{Dutta} \emph{\bbletal{}}(2017)\citenamefont{Dutta},
+  \citenamefont{Dey}, \citenamefont{Dutta} \protect\BIBand{}
+  \citenamefont{Basu}}]{dutta_2017}
+\bibnamefont{Dutta}, \bibfnamefont{R.}, \bibnamefont{Dey}, \bibfnamefont{M.},
+  \bibnamefont{Dutta}, \bibfnamefont{A.} \protect\BIBand{} \bibnamefont{Basu},
+  \bibfnamefont{B.} (2017).
+\newblock Competent processing techniques for scaffolds in tissue engineering.
+\newblock \emph{Biotechnology Advances}, \bblvol{}~35, \bblno{}~2, \bblpp{}
+  240--250.
+
+\bibitem[{\citenamefont{Gregory} \emph{\bbletal{}}(2022)\citenamefont{Gregory},
+  \citenamefont{Benhal}, \citenamefont{Scutte}, \citenamefont{Quashie},
+  \citenamefont{Harrison}, \citenamefont{Cargill}, \citenamefont{Grandison},
+  \citenamefont{Savitsky}, \citenamefont{Ramakrishnan} \protect\BIBand{}
+  \citenamefont{Ali}}]{gregory_2022}
+\bibnamefont{Gregory}, \bibfnamefont{T.}, \bibnamefont{Benhal},
+  \bibfnamefont{P.}, \bibnamefont{Scutte}, \bibfnamefont{A.},
+  \bibnamefont{Quashie}, \bibfnamefont{D.}, \bibnamefont{Harrison},
+  \bibfnamefont{K.}, \bibnamefont{Cargill}, \bibfnamefont{C.},
+  \bibnamefont{Grandison}, \bibfnamefont{S.}, \bibnamefont{Savitsky},
+  \bibfnamefont{M.}, \bibnamefont{Ramakrishnan}, \bibfnamefont{S.}
+  \protect\BIBand{} \bibnamefont{Ali}, \bibfnamefont{J.} (2022).
+\newblock Rheological characterization of cell-laden alginate-gelatin hydrogels
+  for 3d biofabrication.
+\newblock \emph{Journal of the Mechanical Behavior of Biomedical Materials},
+  \bblvol{} 136, \bblp{} 105474.
+
+\bibitem[{\citenamefont{Li} \emph{\bbletal{}}(2020)\citenamefont{Li},
+  \citenamefont{Wu}, \citenamefont{Chu} \protect\BIBand{}
+  \citenamefont{Gelinsky}}]{liwu2020}
+\bibnamefont{Li}, \bibfnamefont{J.}, \bibnamefont{Wu}, \bibfnamefont{C.},
+  \bibnamefont{Chu}, \bibfnamefont{P.} \protect\BIBand{}
+  \bibnamefont{Gelinsky}, \bibfnamefont{M.} (2020).
+\newblock 3d printing of hydrogels: Rational design strategies and emerging
+  biomedical applications.
+\newblock \emph{Materials Science and Engineering: R: Reports}, \bblvol{} 140,
+  \bblp{} 100543.
+
+\bibitem[{\citenamefont{Ma}(2004)}]{mapx2004}
+\bibnamefont{Ma}, \bibfnamefont{P.} (2004).
+\newblock Scaffolds for tissue fabrication.
+\newblock \emph{Materials Today}, \bblvol{}~7, \bblno{}~5, \bblpp{} 30--40.
+
+\bibitem[{\citenamefont{Merceron} \protect\BIBand{}
+  \citenamefont{Murphy}(2015)}]{merceron_2015}
+\bibnamefont{Merceron}, \bibfnamefont{T.} \protect\BIBand{}
+  \bibnamefont{Murphy}, \bibfnamefont{S.} (2015).
+\newblock Hydrogels for 3d bioprinting applications.
+\newblock \capitalize\bblin{}: \emph{3D Bioprinting and Nanotechnology in
+  Tissue Engineering and Regenerative Medicine}, \bblpp{} 249--270. Elsevier.
+
+\bibitem[{\citenamefont{O'Brien}(2011)}]{obrien_2011}
+\bibnamefont{O'Brien}, \bibfnamefont{F.} (2011).
+\newblock Biomaterials \& scaffolds for tissue engineering.
+\newblock \emph{Materials Today}, \bblvol{}~14, \bblno{}~3, \bblpp{} 88--95.
+
+\bibitem[{\citenamefont{Olson} \emph{\bbletal{}}(2011)\citenamefont{Olson},
+  \citenamefont{Atala} \protect\BIBand{} \citenamefont{Yoo}}]{olson_2011}
+\bibnamefont{Olson}, \bibfnamefont{J.}, \bibnamefont{Atala}, \bibfnamefont{A.}
+  \protect\BIBand{} \bibnamefont{Yoo}, \bibfnamefont{J.} (2011).
+\newblock Tissue engineering: Current strategies and future directions.
+\newblock \emph{Chonnam Medical Journal}, \bblvol{}~47, \bblno{}~1, \bblpp{}
+  1--13.
+
+\bibitem[{\citenamefont{Peppas} \emph{\bbletal{}}(2000)\citenamefont{Peppas},
+  \citenamefont{Bures}, \citenamefont{Leobandung} \protect\BIBand{}
+  \citenamefont{Ichikawa}}]{peppas_2000}
+\bibnamefont{Peppas}, \bibfnamefont{N.}, \bibnamefont{Bures},
+  \bibfnamefont{P.}, \bibnamefont{Leobandung}, \bibfnamefont{W.}
+  \protect\BIBand{} \bibnamefont{Ichikawa}, \bibfnamefont{H.} (2000).
+\newblock Hydrogels in pharmaceutical formulations.
+\newblock \emph{European Journal of Pharmaceutics and Biopharmaceutics},
+  \bblvol{}~50, \bblno{}~1, \bblpp{} 27--46.
+
+\bibitem[{\citenamefont{Saltzman}(2004)}]{saltzman_2004}
+\bibnamefont{Saltzman}, \bibfnamefont{W.M.} (2004).
+\newblock \emph{Tissue Engineering: Engineering Principles for the Design of
+  Replacement Organs and Tissues}.
+\newblock Oxford University Press, Oxford ; New York.
+
+\bibitem[{\citenamefont{Skalak} \protect\BIBand{}
+  \citenamefont{Fox}(1988)}]{skalak_1988}
+\bibnamefont{Skalak}, \bibfnamefont{R.} \protect\BIBand{} \bibnamefont{Fox},
+  \bibfnamefont{C.} (1988).
+\newblock \emph{Tissue Engineering}.
+\newblock Alan R. Liss.
+
+\end{thebibliography}

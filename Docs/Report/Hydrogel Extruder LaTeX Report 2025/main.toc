@@ -1,0 +1,54 @@
+\contentsline {chapter}{List of figures}{viii}{}%
+\contentsline {chapter}{List of tables}{ix}{}%
+\contentsline {chapter}{List of symbols}{x}{}%
+\contentsline {chapter}{\numberline {1}Introduction}{1}{}%
+\contentsline {section}{\numberline {1.1}Background}{1}{}%
+\contentsline {section}{\numberline {1.2}Objectives}{1}{}%
+\contentsline {section}{\numberline {1.3}Motivation}{1}{}%
+\contentsline {chapter}{\numberline {2}Literature review}{2}{}%
+\contentsline {section}{\numberline {2.1}Tissue engineering}{2}{}%
+\contentsline {subsection}{\numberline {2.1.1}Definition and Background of Tissue Engineering}{2}{}%
+\contentsline {subsection}{\numberline {2.1.2}Scaffold Requirements}{3}{}%
+\contentsline {subsection}{\numberline {2.1.3}Scaffold Fabrication Methods}{3}{}%
+\contentsline {subsection}{\numberline {2.1.4}Scaffold Materials}{4}{}%
+\contentsline {section}{\numberline {2.2}Hydrogel}{5}{}%
+\contentsline {subsection}{\numberline {2.2.1}Introduction to Hydrogels}{5}{}%
+\contentsline {subsection}{\numberline {2.2.2}Classification of Hydrogels}{5}{}%
+\contentsline {subsection}{\numberline {2.2.3}Properties of Hydrogels}{6}{}%
+\contentsline {section}{\numberline {2.3}3D Printing Hydrogel}{7}{}%
+\contentsline {chapter}{\numberline {3}Stakeholder Requirements}{8}{}%
+\contentsline {chapter}{\numberline {4}Engineering Requirements}{9}{}%
+\contentsline {chapter}{\numberline {5}Functional Decomposition}{10}{}%
+\contentsline {chapter}{\numberline {6}Mechanical Design}{11}{}%
+\contentsline {section}{\numberline {6.1}Extruder Design}{12}{}%
+\contentsline {subsection}{\numberline {6.1.1}Concept Generation}{12}{}%
+\contentsline {subsection}{\numberline {6.1.2}Concept Evaluation and Selection}{15}{}%
+\contentsline {subsection}{\numberline {6.1.3}Final Design}{15}{}%
+\contentsline {section}{\numberline {6.2}Gantry Design}{15}{}%
+\contentsline {subsection}{\numberline {6.2.1}Concept Generation}{15}{}%
+\contentsline {subsection}{\numberline {6.2.2}Concept Evaluation and Selection}{15}{}%
+\contentsline {subsection}{\numberline {6.2.3}Final Design}{15}{}%
+\contentsline {section}{\numberline {6.3}Final Assembled Bioprinter}{15}{}%
+\contentsline {chapter}{\numberline {7}Embedded System Design}{16}{}%
+\contentsline {section}{\numberline {7.1}System Description}{16}{}%
+\contentsline {section}{\numberline {7.2}Hardware Design and Implementation}{16}{}%
+\contentsline {subsection}{\numberline {7.2.1}Hardware Block Diagram and Description of Interaction}{16}{}%
+\contentsline {subsection}{\numberline {7.2.2}Power Supply}{16}{}%
+\contentsline {subsection}{\numberline {7.2.3}Memory Storage and Programmer Circuit}{16}{}%
+\contentsline {subsection}{\numberline {7.2.4}Stepper Motor Setup}{16}{}%
+\contentsline {subsection}{\numberline {7.2.5}Load Cell Circuit}{16}{}%
+\contentsline {subsection}{\numberline {7.2.6}Thermocouple Circuit}{16}{}%
+\contentsline {subsection}{\numberline {7.2.7}FET Switching Circuit}{16}{}%
+\contentsline {section}{\numberline {7.3}Software Design and Implementation}{16}{}%
+\contentsline {section}{\numberline {7.4}Measurements and Results}{16}{}%
+\contentsline {chapter}{\numberline {8}Experimental Design}{17}{}%
+\contentsline {section}{\numberline {8.1}Materials and Methods}{17}{}%
+\contentsline {subsection}{\numberline {8.1.1}Materials}{17}{}%
+\contentsline {subsection}{\numberline {8.1.2}Equipment Specifications}{18}{}%
+\contentsline {subsection}{\numberline {8.1.3}Methods}{18}{}%
+\contentsline {section}{\numberline {8.2}Discussion of Results and Conclusion}{18}{}%
+\contentsline {chapter}{\numberline {9}Conclusions}{19}{}%
+\contentsline {chapter}{\numberline {A}Calculations}{20}{}%
+\contentsline {section}{\numberline {A.1}Syringe Calculations}{20}{}%
+\contentsline {chapter}{\numberline {B}Experimental results}{22}{}%
+\contentsline {chapter}{List of references}{23}{}%

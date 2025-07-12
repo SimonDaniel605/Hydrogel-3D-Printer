@@ -1,32 +1,56 @@
-\chapter{Mathematical proofs}
+\chapter{Calculations}
 
-\section{Euler's equation}
-Euler's equation gives the relationship between the trigonometric functions and the complex exponential function.
-\begin{equation}
-    e^{ i\theta } = \cos \theta + i\sin \theta
-    \label{eq:Euler}
-\end{equation}
-Inserting $\theta=\pi$ in \eqref{eq:Euler} results in Euler's identity
-\begin{equation}
-    e^{ i \pi} + 1 = 0
-    \label{eq:Euler2}
-\end{equation}
+\section{Syringe Calculations}
 
+\textbf{Given:}
+\begin{align*}
+\text{Inner diameter of barrel (ID}_1\text{)} &= \SI{20}{\milli\meter} \\
+\text{Length of barrel (L}_1\text{)} &= \SI{80}{\milli\meter} \\
+\text{Inner diameter of nozzle (ID}_2\text{)} &= \SI{0.2}{\milli\meter} \\
+\text{Length of nozzle (L}_2\text{)} &= \SI{20}{\milli\meter}
+\end{align*}
 
-\section{Navier Stokes equation}
+\textbf{Cross-sectional areas:}
+\begin{align*}
+A_1 &= \pi \left(10 \times 10^{-3}\right)^2 \approx 314 \times 10^{-6} \, \si{\meter\squared} \\
+A_2 &= \pi \left(0.1 \times 10^{-3}\right)^2 \approx 31.4 \times 10^{-9} \, \si{\meter\squared}
+\end{align*}
 
-The Navier–Stokes equations mathematically express momentum balance and conservation of mass for Newtonian fluids.  Navier-Stokes equations using tensor notation:
-\begin{subequations}
-\begin{gather}
-    \frac{\partial \rho}{\partial t} +
-    \frac{\partial}{\partial x_j}\left[ \rho u_j \right] = 0 
-    \\
-    \frac{\partial}{\partial t}\left( \rho u_i \right) +
-    \frac{\partial}{\partial x_j}
-    \left[ \rho u_i u_j + p \delta_{ij} - \tau_{ji} \right] = 0, \quad i=1,2,3
-    \\
-    \frac{\partial}{\partial t}\left( \rho e_0 \right) +
-    \frac{\partial}{\partial x_j}
-    \left[ \rho u_j e_0 + u_j p + q_j - u_i \tau_{ij} \right] = 0
-\end{gather}
-\end{subequations}
+\textbf{Max extrusion speed at nozzle:}
+\[
+v = \SI{5}{\milli\meter\per\second} = 5 \times 10^{-3} \, \si{\meter\per\second}
+\]
+
+\textbf{Volumetric flow rate:}
+\[
+Q = v \cdot A_2 = (5 \times 10^{-3}) \cdot (31.4 \times 10^{-9}) = 1.57 \times 10^{-10} \, \si{\meter\cubed\per\second}
+\]
+
+\textbf{Assumed viscosity:} 
+\[
+\mu = \SI{10}{\pascal\second}
+\]
+
+\textbf{Poiseuille's Law:}
+\[
+\Delta P = \frac{8 \mu L Q}{\pi r^4}
+\]
+
+\textbf{Total pressure required:}
+\begin{align*}
+P_B &= P_{\text{atm}} = \SI{101325}{\pascal} \\
+P_A &= \frac{8 \cdot 10 \cdot 0.08 \cdot (1.57 \times 10^{-10})}{\pi (0.01)^4}
++ \frac{8 \cdot 10 \cdot 0.02 \cdot (1.57 \times 10^{-10})}{\pi (0.0001)^4}
++ 101325 \\
+&= \SI{900919}{\pascal} = \SI{900.919}{\kilo\pascal}
+\end{align*}
+
+\textbf{Required force:}
+\[
+F = P \cdot A_1 = (900\,919) \cdot (314 \times 10^{-6}) = \SI{282.889}{\newton}
+\]
+
+\textbf{Design force (with safety margin):}
+\[
+F_{\text{design}} = \SI{300}{\newton}
+\]
