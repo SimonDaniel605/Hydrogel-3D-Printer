@@ -3470,6 +3470,12 @@
 		(uuid "255c356e-8416-4b10-9b95-f73571844208")
 	)
 	(junction
+		(at 82.55 57.15)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "4de4bdfa-2d13-4fb0-afb6-776291afad65")
+	)
+	(junction
 		(at 115.57 57.15)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -3521,13 +3527,7 @@
 		(at 73.66 67.31)
 		(diameter 0)
 		(color 0 0 0 0)
-		(uuid "df7a3b95-3fe1-451c-a91e-3bec26853d18")
-	)
-	(junction
-		(at 82.55 57.15)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "ec1d37e7-eb96-4250-a054-d0a37823c92e")
+		(uuid "e456c86d-310c-42da-b9d9-9fe12b8a5edc")
 	)
 	(wire
 		(pts
@@ -3591,7 +3591,7 @@
 	)
 	(wire
 		(pts
-			(xy 115.57 57.785) (xy 115.57 57.15)
+			(xy 115.57 58.42) (xy 115.57 57.15)
 		)
 		(stroke
 			(width 0)
@@ -3691,23 +3691,13 @@
 	)
 	(wire
 		(pts
-			(xy 82.55 65.405) (xy 82.55 67.31)
+			(xy 82.55 66.04) (xy 82.55 67.31)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
 		(uuid "2d954c47-bcbc-48ad-a83f-7a14307db0fe")
-	)
-	(wire
-		(pts
-			(xy 55.88 57.15) (xy 68.58 57.15)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "2d9ffd31-9197-4848-b3a6-019ccaafa6b3")
 	)
 	(wire
 		(pts
@@ -3798,16 +3788,6 @@
 			(type default)
 		)
 		(uuid "4486b38e-012a-4fff-a0d6-0a5a45fbdba4")
-	)
-	(wire
-		(pts
-			(xy 115.57 66.04) (xy 115.57 65.405)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "4996ecf7-b7fc-4b0e-a49c-4256319664ca")
 	)
 	(wire
 		(pts
@@ -3931,6 +3911,16 @@
 	)
 	(wire
 		(pts
+			(xy 73.66 62.23) (xy 73.66 67.31)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "85002c16-0344-4b26-8cbe-9d56a6b4a544")
+	)
+	(wire
+		(pts
 			(xy 153.67 143.51) (xy 153.67 142.24)
 		)
 		(stroke
@@ -4048,16 +4038,6 @@
 			(type default)
 		)
 		(uuid "a64fada3-2678-49b7-a477-8c17e028cb4e")
-	)
-	(wire
-		(pts
-			(xy 73.66 62.23) (xy 73.66 67.31)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "ac108110-d639-48a1-b7b6-3301a387579c")
 	)
 	(wire
 		(pts
@@ -4201,6 +4181,16 @@
 	)
 	(wire
 		(pts
+			(xy 82.55 57.15) (xy 82.55 58.42)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "ea3601f5-d1f6-4fc4-913c-b18ce2da73ce")
+	)
+	(wire
+		(pts
 			(xy 60.96 139.7) (xy 60.96 137.16)
 		)
 		(stroke
@@ -4221,16 +4211,6 @@
 	)
 	(wire
 		(pts
-			(xy 82.55 57.785) (xy 82.55 57.15)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "eff4d82b-046c-4290-b451-efe25683b888")
-	)
-	(wire
-		(pts
 			(xy 102.87 149.86) (xy 102.87 148.59)
 		)
 		(stroke
@@ -4248,6 +4228,16 @@
 			(type default)
 		)
 		(uuid "f5464611-ca2c-4693-8c39-60a14e51e075")
+	)
+	(wire
+		(pts
+			(xy 55.88 57.15) (xy 68.58 57.15)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "f85e9b5c-572a-4143-a008-532de9e1a23b")
 	)
 	(wire
 		(pts
@@ -6654,7 +6644,7 @@
 	)
 	(symbol
 		(lib_id "Diode:1N47xxA")
-		(at 82.55 61.595 270)
+		(at 82.55 62.23 270)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -6663,7 +6653,7 @@
 		(fields_autoplaced yes)
 		(uuid "be76c561-9d9e-4a10-85f4-414d0e69fc74")
 		(property "Reference" "D1"
-			(at 85.09 60.3249 90)
+			(at 85.09 60.9599 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6672,7 +6662,7 @@
 			)
 		)
 		(property "Value" "1N4744A"
-			(at 85.09 62.8649 90)
+			(at 85.09 63.4999 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6681,7 +6671,7 @@
 			)
 		)
 		(property "Footprint" "Diode_THT:D_DO-41_SOD81_P10.16mm_Horizontal"
-			(at 78.105 61.595 0)
+			(at 78.105 62.23 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6690,7 +6680,7 @@
 			)
 		)
 		(property "Datasheet" "https://www.vishay.com/docs/85816/1n4728a.pdf"
-			(at 82.55 61.595 0)
+			(at 82.55 62.23 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6699,7 +6689,7 @@
 			)
 		)
 		(property "Description" "1300mW Silicon planar power Zener diodes, DO-41"
-			(at 82.55 61.595 0)
+			(at 82.55 62.23 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6724,7 +6714,7 @@
 	)
 	(symbol
 		(lib_id "Diode:SMAJ16A")
-		(at 115.57 61.595 90)
+		(at 115.57 62.23 90)
 		(mirror x)
 		(unit 1)
 		(exclude_from_sim no)
@@ -6733,7 +6723,7 @@
 		(dnp no)
 		(uuid "c33ec1bc-c1e8-4328-a951-92c9a555c9ee")
 		(property "Reference" "D2"
-			(at 113.03 60.3249 90)
+			(at 113.03 60.9599 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6742,7 +6732,7 @@
 			)
 		)
 		(property "Value" "SMAJ16A"
-			(at 113.03 62.8649 90)
+			(at 113.03 63.4999 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6751,7 +6741,7 @@
 			)
 		)
 		(property "Footprint" "Diode_SMD:D_SMA"
-			(at 120.65 61.595 0)
+			(at 120.65 62.23 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6760,7 +6750,7 @@
 			)
 		)
 		(property "Datasheet" "https://www.littelfuse.com/media?resourcetype=datasheets&itemid=75e32973-b177-4ee3-a0ff-cedaf1abdb93&filename=smaj-datasheet"
-			(at 115.57 60.325 0)
+			(at 115.57 60.96 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6769,7 +6759,7 @@
 			)
 		)
 		(property "Description" "400W unidirectional Transient Voltage Suppressor, 16.0Vr, SMA(DO-214AC)"
-			(at 115.57 61.595 0)
+			(at 115.57 62.23 0)
 			(effects
 				(font
 					(size 1.27 1.27)
