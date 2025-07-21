@@ -7311,7 +7311,8 @@
 	)
 	(symbol
 		(lib_id "Connector:Screw_Terminal_01x05")
-		(at 228.6 120.65 270)
+		(at 228.6 120.65 90)
+		(mirror x)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -7319,7 +7320,7 @@
 		(dnp no)
 		(uuid "bf95db7d-cb07-4cf5-b22b-2b51ec8e4a4c")
 		(property "Reference" "J32"
-			(at 217.932 118.618 90)
+			(at 219.075 119.38 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7327,7 +7328,7 @@
 			)
 		)
 		(property "Value" "Screw_Terminal_01x05"
-			(at 209.042 121.158 90)
+			(at 210.185 121.92 90)
 			(effects
 				(font
 					(size 1.27 1.27)
