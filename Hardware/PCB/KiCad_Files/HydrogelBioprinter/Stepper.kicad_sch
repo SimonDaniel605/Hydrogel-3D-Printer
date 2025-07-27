@@ -4394,8 +4394,8 @@
 				)
 			)
 		)
-		(property "Value" "MKS TMC2209"
-			(at 255.27 53.086 90)
+		(property "Value" "A4988"
+			(at 251.46 53.34 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5185,8 +5185,8 @@
 				)
 			)
 		)
-		(property "Value" "MKS TMC2209"
-			(at 163.83 53.086 90)
+		(property "Value" "A4988"
+			(at 160.02 53.34 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6713,8 +6713,8 @@
 				)
 			)
 		)
-		(property "Value" "MKS TMC2209"
-			(at 69.85 53.086 90)
+		(property "Value" "A4988"
+			(at 66.04 53.34 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7165,8 +7165,8 @@
 				)
 			)
 		)
-		(property "Value" "MKS TMC2209"
-			(at 209.55 53.086 90)
+		(property "Value" "A4988"
+			(at 205.74 53.34 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7538,8 +7538,8 @@
 				)
 			)
 		)
-		(property "Value" "MKS TMC2209"
-			(at 118.11 53.086 90)
+		(property "Value" "A4988"
+			(at 114.3 53.34 90)
 			(effects
 				(font
 					(size 1.27 1.27)
