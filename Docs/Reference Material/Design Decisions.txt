@@ -1,0 +1,4 @@
+Based on DESCRIPTION OF PREFERRED FITS (ANSI B4.2): The syrine plunger will use a clearance fit of H9/d10. Therefore the Syringe must have an ID of 20.000-20.052mm and the plunger should have an OD of 19.851-19.935mm. This yields a diametral clearance of 0.065-0.201mm. 
+
+Groove width will be 3.3mm and its diameter will be 16mm (https://ceetak.com/o-ring-calculator/)
+
