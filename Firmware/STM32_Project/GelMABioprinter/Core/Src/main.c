@@ -19,7 +19,6 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 
-
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "Stepper.h"
@@ -43,6 +42,8 @@
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
+TIM_HandleTypeDef htim1;
+
 PCD_HandleTypeDef hpcd_USB_OTG_FS;
 
 /* USER CODE BEGIN PV */
@@ -53,6 +54,7 @@ PCD_HandleTypeDef hpcd_USB_OTG_FS;
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_USB_OTG_FS_PCD_Init(void);
+static void MX_TIM1_Init(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
@@ -92,8 +94,59 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_USB_OTG_FS_PCD_Init();
+  MX_TIM1_Init();
   /* USER CODE BEGIN 2 */
+  // Define motor configurations
+  StepperMotor motor_x = {
+      .STEP_Port = GPIOE, .STEP_Pin = GPIO_PIN_9,
+      .DIR_Port = GPIOE,  .DIR_Pin = GPIO_PIN_8,
+      .EN_Port = GPIOE,   .EN_Pin = GPIO_PIN_7,
+      .htim = &htim1
+  };
+  StepperMotor motor_y = {
+      .STEP_Port = GPIOE, .STEP_Pin = GPIO_PIN_11,
+      .DIR_Port = GPIOE,  .DIR_Pin = GPIO_PIN_10,
+      .EN_Port = GPIOE,   .EN_Pin = GPIO_PIN_7,
+      .htim = &htim1
+  };
+  StepperMotor motor_z = {
+      .STEP_Port = GPIOE, .STEP_Pin = GPIO_PIN_13,
+      .DIR_Port = GPIOE,  .DIR_Pin = GPIO_PIN_12,
+      .EN_Port = GPIOE,   .EN_Pin = GPIO_PIN_7,
+      .htim = &htim1
+  };
+  StepperMotor motor_e = {
+      .STEP_Port = GPIOE, .STEP_Pin = GPIO_PIN_14,
+      .DIR_Port = GPIOE,  .DIR_Pin = GPIO_PIN_15,
+      .EN_Port = GPIOE,   .EN_Pin = GPIO_PIN_7,
+      .htim = &htim1
+  };
 
+  // Initialize steppers
+  Stepper_Init(STEPPER_X, motor_x);
+  Stepper_Init(STEPPER_Y, motor_y);
+  Stepper_Init(STEPPER_Z, motor_z);
+  Stepper_Init(STEPPER_E, motor_e);
+
+  // Enable all steppers
+  Stepper_Enable(STEPPER_X);
+  Stepper_Enable(STEPPER_Y);
+  Stepper_Enable(STEPPER_Z);
+  Stepper_Enable(STEPPER_E);
+
+  // Set initial position
+  setPosition(0, 0, 0, 0);
+
+  // Move Y axis by 100 mm at 10 mm/s
+  moveTo(1000.0, 0.0, 0.0, 0.0, 100);
+  HAL_Delay(1000);
+  moveTo(-1000.0, 0.0, 0.0, 0.0, 500);
+  HAL_Delay(1000);
+  moveTo(1000.0, 0.0, 0.0, 0.0, 1000);
+  HAL_Delay(1000);
+  moveTo(1300.0, 0.0, 0.0, 0.0, 400);
+  HAL_Delay(1000);
+  moveTo(1600.0, 0.0, 0.0, 0.0, 2000);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -152,6 +205,52 @@ void SystemClock_Config(void)
   {
     Error_Handler();
   }
+}
+
+/**
+  * @brief TIM1 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_TIM1_Init(void)
+{
+
+  /* USER CODE BEGIN TIM1_Init 0 */
+
+  /* USER CODE END TIM1_Init 0 */
+
+  TIM_ClockConfigTypeDef sClockSourceConfig = {0};
+  TIM_MasterConfigTypeDef sMasterConfig = {0};
+
+  /* USER CODE BEGIN TIM1_Init 1 */
+
+  /* USER CODE END TIM1_Init 1 */
+  htim1.Instance = TIM1;
+  htim1.Init.Prescaler = 0;
+  htim1.Init.CounterMode = TIM_COUNTERMODE_UP;
+  htim1.Init.Period = 65535;
+  htim1.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
+  htim1.Init.RepetitionCounter = 0;
+  htim1.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+  if (HAL_TIM_Base_Init(&htim1) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sClockSourceConfig.ClockSource = TIM_CLOCKSOURCE_INTERNAL;
+  if (HAL_TIM_ConfigClockSource(&htim1, &sClockSourceConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
+  sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
+  if (HAL_TIMEx_MasterConfigSynchronization(&htim1, &sMasterConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN TIM1_Init 2 */
+
+  /* USER CODE END TIM1_Init 2 */
+
 }
 
 /**

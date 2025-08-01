@@ -5,4 +5,108 @@
  *      Author: Simon
  */
 #include "Stepper.h"
+#include <math.h>
 
+#define STEPS_PER_MM_X 80
+#define STEPS_PER_MM_Y 44.44
+#define STEPS_PER_MM_Z 400
+#define STEPS_PER_MM_E 95
+
+static float current_pos[STEPPER_COUNT] = {0};
+static StepperMotor motors[STEPPER_COUNT];
+
+void Stepper_Init(StepperID id, StepperMotor config) {
+    motors[id] = config;
+    HAL_GPIO_WritePin(config.EN_Port, config.EN_Pin, GPIO_PIN_SET); // Disable initially
+}
+
+void Stepper_Enable(StepperID id) {
+    HAL_GPIO_WritePin(motors[id].EN_Port, motors[id].EN_Pin, GPIO_PIN_RESET);
+}
+
+void Stepper_Disable(StepperID id) {
+    HAL_GPIO_WritePin(motors[id].EN_Port, motors[id].EN_Pin, GPIO_PIN_SET);
+}
+
+void Stepper_SetDirection(StepperID id, uint8_t dir) {
+    motors[id].direction = dir;
+    HAL_GPIO_WritePin(motors[id].DIR_Port, motors[id].DIR_Pin, dir ? GPIO_PIN_SET : GPIO_PIN_RESET);
+}
+
+void Stepper_Move(StepperID id, uint32_t steps, uint32_t freq_hz) {
+    StepperMotor* m = &motors[id];
+    m->steps_remaining = steps;
+    m->active = 1;
+
+    uint32_t timer_clk = HAL_RCC_GetPCLK1Freq() * 2;
+    uint32_t arr = (timer_clk / (freq_hz * 2)) - 1;
+
+    m->htim->Instance->PSC = 0;
+    m->htim->Instance->ARR = arr;
+    m->htim->Instance->CNT = 0;
+
+    HAL_TIM_Base_Start_IT(m->htim);
+}
+
+void Stepper_Stop(StepperID id) {
+    motors[id].active = 0;
+    HAL_TIM_Base_Stop_IT(motors[id].htim);
+    HAL_GPIO_WritePin(motors[id].STEP_Port, motors[id].STEP_Pin, GPIO_PIN_RESET);
+}
+
+void Stepper_TIM_ISR(TIM_HandleTypeDef *htim) {
+    for (int i = 0; i < STEPPER_COUNT; i++) {
+        if (motors[i].htim == htim && motors[i].active) {
+            if (motors[i].steps_remaining > 0) {
+                HAL_GPIO_TogglePin(motors[i].STEP_Port, motors[i].STEP_Pin);
+                motors[i].steps_remaining--;
+            } else {
+                Stepper_Stop((StepperID)i);
+            }
+            break;
+        }
+    }
+}
+
+void moveTo(float x, float y, float z, float e, uint32_t speed_mm_s) {
+    float target[STEPPER_COUNT] = {x, y, z, e};
+    float delta[STEPPER_COUNT];
+    uint32_t steps[STEPPER_COUNT];
+    int dir[STEPPER_COUNT];
+    uint32_t freq[STEPPER_COUNT];
+
+    for (int i = 0; i < STEPPER_COUNT; i++) {
+        delta[i] = target[i] - current_pos[i];
+        dir[i] = (delta[i] >= 0) ? 1 : 0;
+    }
+
+    steps[STEPPER_X] = fabsf(delta[STEPPER_X]) * STEPS_PER_MM_X;
+    steps[STEPPER_Y] = fabsf(delta[STEPPER_Y]) * STEPS_PER_MM_Y;
+    steps[STEPPER_Z] = fabsf(delta[STEPPER_Z]) * STEPS_PER_MM_Z;
+    steps[STEPPER_E] = fabsf(delta[STEPPER_E]) * STEPS_PER_MM_E;
+
+    freq[STEPPER_X] = speed_mm_s * STEPS_PER_MM_X;
+    freq[STEPPER_Y] = speed_mm_s * STEPS_PER_MM_Y;
+    freq[STEPPER_Z] = speed_mm_s * STEPS_PER_MM_Z;
+    freq[STEPPER_E] = speed_mm_s * STEPS_PER_MM_E;
+
+    for (int i = 0; i < STEPPER_COUNT; i++) {
+        Stepper_SetDirection((StepperID)i, dir[i]);
+        Stepper_Move((StepperID)i, steps[i], freq[i]);
+        current_pos[i] = target[i];
+    }
+}
+
+void setPosition(float x, float y, float z, float e) {
+    current_pos[STEPPER_X] = x;
+    current_pos[STEPPER_Y] = y;
+    current_pos[STEPPER_Z] = z;
+    current_pos[STEPPER_E] = e;
+}
+
+void getPosition(float* x, float* y, float* z, float* e) {
+    *x = current_pos[STEPPER_X];
+    *y = current_pos[STEPPER_Y];
+    *z = current_pos[STEPPER_Z];
+    *e = current_pos[STEPPER_E];
+}
