@@ -14,3 +14,4 @@ PCB/KiCad_Files/*.tmp
 # General
 .DS_Store
 Thumbs.db
+*.xcf
