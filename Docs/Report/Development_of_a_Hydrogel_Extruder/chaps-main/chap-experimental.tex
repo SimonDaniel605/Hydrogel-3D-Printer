@@ -1,0 +1,164 @@
+\chapter{Experimental Design}
+The purpose of this chapter is to provide an experimental procedure that allows the custom hydrogel bioprinter to be calibrated for a specific desired hydrogel and to ensure user-safety and reliable operation by providing handling and cleaning instructions. 
+
+The printer's purpose is to serve as a research tool for Stellenbosch University’s Physiology Department, where it will be used both for the characterisation of bioinks and for the fabrication of hydrogel scaffolds to model and simulate cell growth and behaviour in biomedical research. To ensure the hydrogel extrusion system is integrated effectively into this research environment, the chapter establishes protocols for adjusting printing parameters to find the optimal settings for different gels, and details procedures to handle the bioprinter and to clean it after use to maintain hygiene and prevent contamination between experiments which ensures cell viability in cases where the printer is used to print cell-seeded prints. The procedure will be applied to a surrogate gel and documented as an example for use. These guidelines are intended to ensure that the bioprinter can be used consistently, safely, and effectively throughout its utilisation phase.
+
+The calibration procedure involves applying a series of different experiments with the bioprinter and its bioink to optimise its print parameters within different categories of print operations (printing straight, curved, multiple adjacent, and stacked lines). 
+
+
+\section{Materials and Methods}
+\subsection{Materials}
+The experimental set-up requires the following equipment and materials:
+\begin{itemize}
+\item Custom 3D printer with syringe-based extruder
+\item Allen Key
+\item Bioink solution
+\item Laptop (with USB port)
+\item Vernier calliper
+\item Camera with mount
+\end{itemize}
+
+For the surrogate gel (for the example calibration), the following equipment and materials are required:
+\begin{itemize}
+\item Store-bought Agar Agar powder 
+\item Kettle
+\item Measurement jug
+\item Weight scale
+\end{itemize}
+
+
+The bioprinter comprises of an extruder and a gantry. The extruder uses a lead screw to extrude the gel out of a custom aluminium syringe onto a cooled aluminium bed, and the extrusion force being applied to push the PVC plunger is measured using a load cell and sampled using an STM32F407VGT6 microcontroller. The extruder position relative to the gantry, is varied across 3D space by a gantry that uses belts to adjust the extruder position in the horizontal plain and uses a lead screw to adjust the nozzle height.
+
+The bioprinter’s settings are adjusted using a computer which is used to load the print settings (along with the print movement tasks) onto a microSD card which is inserted into and read by the bioprinter to perform each calibration trial. The laptop is also used to read transmitted USB information from the printer such as extrusion force and the temperature of the nozzle and bed. 
+
+After each print iteration, a photo is taken of the printed strands and its dimensions are analysed in software (ImageJ) to assess the print quality. This experimental set-up is shown below in Figure~\ref{fig:experimentalSetup}:
+ \begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.7]{figs/ExperimentalSetup.png}
+    \caption{Experimental Set-up}
+    \label{fig:experimentalSetup}
+\end{figure}
+
+
+\subsection{Equipment Specifications}
+The experimental equipment needs to allow a printed line (or multiple lines) of hydrogel to be extruded onto a printing bed where the print line’s width and can be measured at points along the line without distorting the line’s dimensions over the course of the measurement process as this would decrease the reliability of the measurements. The experiment also needs a way to configure the bioprinter’s parameters and receive real time printing feedback.
+
+\subsubsection*{Gel Specifications}
+The gel specifications depend on the research needs of the end-user, with each hydrogel type and concentration coming with its own rheological properties and storage and handling protocols.
+
+This experimental procedure, however, was applied to a surrogate gel that is a agar-water mixture. In which store-bought Agar-agar powder is dissolved in water at 2\% w/v. Agar powder was used as it is easy to prepare and gels more rapidly when cooled compared to other store-bought alternatives such as gelatin powder.
+
+\subsubsection*{Bioprinter Specifications}
+\begin{itemize}
+    \item \textbf{Extruder} – This consists of a syringe with a volume of 20\,ml and a nozzle diameter of 0.4\,mm. The nozzle is capable of reaching a maximum temperature of 95 $^{\circ}$C.
+    
+    \item \textbf{Gantry} – The gantry is used to position the extruder in 3D space. Two NEMA 17 stepper motors drive belts that control the 2-axis motion in the horizontal plane. A leadscrew (also driven by a NEMA 17) with an 8\,mm lead is used to control the extruder’s vertical position.
+    
+    \item \textbf{Bed} – The gel is printed on a 110\,mm $\times$ 168\,mm aluminium bed. The bed is capable of reaching a minimum temperature of 4 $^{\circ}$C.
+\end{itemize}
+
+\subsubsection*{Software}
+\begin{itemize}
+    \item \textbf{ImageJ} – This is used to measure the dimensions of the print strands in images of each print iteration.
+    \item \textbf{MATLAB} – This is used to graph live data from the printer via USB connection between the laptop and bioprinter. The measurement data from the printing trials are also stored manually and are processed and plotted using MATLAB.
+\end{itemize}
+
+\subsection{Methods}
+
+The variables identified, relating to the calibration procedure, are shown below in Table~\ref{tab:variables}:
+
+\begin{longtable}{>{\raggedright\arraybackslash}p{4cm} p{10cm}}
+\caption{Experimental Variables} \label{tab:variables}\\
+\hline
+\textbf{Variable Type} & \textbf{Variables} \\
+\hline
+Independent Variables & Extrusion rate, printing speed, nozzle height, print line radius, layer count \\
+Dependent Variables   & Extrusion force, layer height, layer width, print quality, stack height \\
+Controlled Variables  & Gel concentration, print line length nozzle diameter, nozzle temperature, bed temperature \\
+Extraneous Variables  & Ambient temperature, vibrations \\
+\hline
+\end{longtable}
+
+During the analysis of results, the mean layer height and width, stack height, and standard deviation of the layer height and width (in mm) along each of the printed lines are tabulated against the varied printing parameters: extrusion rate (mm/s), printing speed (mm/s), nozzle height (mm), print line radius (mm) and layer count. The two standard deviations serve as separate measures of print quality, where high deviations indicate lower print stability and quality. The total mean height of multiple printed layers will also be measured and calculated along with its standards deviation and compared to its corresponding layer count and layer height increment (mm).
+
+The extrusion force from the load cell, measured via the COM port using MATLAB, is also plotted against time for each of the different extrusion rates. The nozzle diameter affects both the speed and width of the extruded gel, influencing the resulting line width, height, and quality. These dependent variables are also affected by the rheological properties of the gel, which is why the nozzle diameter and gel concentration are kept constant as controlled variables.
+
+Ambient temperature and environmental vibrations, including those from the printer itself, can also influence outcomes. However, these are considered extraneous variables and are not within the scope of control in this experiment.
+
+\subsubsection*{Gel preparation}
+
+The following steps detail how to prepare the agar surrogate gel. It should be noted that these steps must only be followed when the bioprinter is ready to be loaded with the solution (after step 4 of the experimental set-up procedure) and the next print trial is intended to begin within the 5-10 minutes of the completion of the gels preparation to ensure that it does not gel prematurely before its printed.
+
+\begin{enumerate}
+    \item Fill the kettle with water and heat water until boiling ($100^{\circ}$C).
+    \item From the kettle, pour the boiling water into a clean measurement jug until the bottom of the meniscus reaches the 100\,mL mark on the measuring jug.
+    \item Using a digital scale, weigh 2 g of agar-agar powder. 
+    \item Slowly mix the powder into the boiling water in the measurement jug. Slowly sprinkle the powder into the water, while stirring with the spoon. After all of of the powder has been sprinkled in the measurement jug, continue stirring until there are no visible clumps remaining in the solution.
+\end{enumerate}
+
+\subsubsection*{Experimental Set-up Procedure}
+Before the calibration can be conducted, the a set-up procedure must first be conducted. Due to the bioprinter's ability to heat its nozzle and syringe, it is best that this step is repeated before every printing trial (loaded onto the microSD card), to ensure the system operator does not come into direct contact with the potentially high syringe temperatures.
+\begin{enumerate}
+    \item Using the laptop, load the print settings and print tasks (according to the needs of the specific experimental trial that is being conducted) onto the microSD card.
+    \item Insert the card into the bioprinter circuit board's microSD port and connect the laptop to the printer's PCB via USB cable. A blue LED on the PCB will light up once the USB connection is established.
+    \item Ensure the MATLAB graphing software has been opened and is running.
+    \item Using the Allen Key, unbolt the syringe from the extruder assembly and unscrew the syringe hot-end from the metal syringe tip.
+    \item Check and ensure syringe is clean and press the plunger until it is fully depressed to the bottom of the syringe tube.
+    \item Once the gel solution is ready for use (see the gel preparation procedure or the handling/preparation steps of the desired bioink), submerge the tip of the syringe into the substance and pull the plunger until it reaches the end of the syringe or a sufficient volume of the solution is extracted.
+    \item Once the printer fluid has been loaded, wipe the syringe sections that were submerged during extraction, with a cloth.
+    \item Screw the hot-end assembly back on to the threaded syringe tip and mount the flanged syringe back onto the extruder platform using the bolts and Allen Key (make sure at least two bolts are fastened along the PCD (flange mounting holes).
+    \item Plug in the 3D printer's 3 prong plug into the wall socket to provide power to the system. The system will initialize according to the print settings on the microSD card and once it is homed and the bed and nozzle have reached their set temperature, the bioprinter will begin its print trial. 
+    \item Do not touch the printer during operation and keep the area around moving parts and nip points clear of loose items.
+    \item Monitor the bed and syringe temperature through MATLAB as well as the extrusion force to ensure safe printer operation.
+    \item Once the print trial is done, use a camera to take a photo of the results.
+    \item Analyse the results in ImageJ.
+    \item Perform clean-up procedure.
+\end{enumerate}
+\subsubsection*{Straight Line Test Procedure}
+
+Once the setup is complete, the following test procedure is performed:
+
+\begin{enumerate}
+    \item Use STM32CubeIDE to vary the extrusion rate (mm/s), printing speed (mm/s), and nozzle offset (mm).
+    \item Begin the extrusion process to deposit a 10\,mm long GelMA line onto the bed. Monitor the print using Termite.
+    \item Use MATLAB to acquire and process the time-based extrusion force data for each extrusion rate.
+    \item After printing, if no UV shielding is present, evacuate the room while the UV light cures the print for 5 minutes.
+    \item Re-enter the room and measure the printed line’s width and height at 10 equidistant points (1\,mm apart) using a digital caliper.
+    \item Record the mean and standard deviation of the 10 measurements for both width and height. These serve as metrics for print stability and quality.
+    \item Repeat each test condition three times. Compute 95\% confidence intervals for each of the four measured variables (mean and standard deviation of width and height) to quantify measurement uncertainty and evaluate repeatability.
+\end{enumerate}
+
+A proposed test matrix is shown in Table~\ref{tab:testmatrix}, which outlines the combination of printing parameters for each trial in the experiment.
+
+\begin{longtable}{ccc}
+\caption{Proposed Test Matrix for Each Experiment} \label{tab:testmatrix} \\
+\hline
+\textbf{Test No.} & \textbf{Printing Speed (mm/s)} & \textbf{Extrusion Speed (mm/s)} \\
+\hline
+1  & 1 & 0.025 \\
+2  & 1 & 0.050 \\
+3  & 1 & 0.075 \\
+4  & 1 & 0.100 \\
+5  & 2 & 0.025 \\
+6  & 2 & 0.050 \\
+7  & 2 & 0.075 \\
+8  & 2 & 0.100 \\
+9  & 3 & 0.025 \\
+10 & 3 & 0.050 \\
+11 & 3 & 0.075 \\
+12 & 3 & 0.100 \\
+13 & 4 & 0.025 \\
+14 & 4 & 0.050 \\
+15 & 4 & 0.075 \\
+16 & 4 & 0.100 \\
+\hline
+\end{longtable}
+These tests are split up into two experiments, two compare the variation of nozzle offset. In experiment A, the nozzle offset is set to 2mm and in experiment B, it is set to 4mm.
+
+\subsubsection*{Curved Line Test Procedure}
+
+\subsubsection*{Layer Stacking Test Procedure}
+
+\subsubsection*{Cleaning Procedure}
+
+\section{Discussion of Results and Conclusion}

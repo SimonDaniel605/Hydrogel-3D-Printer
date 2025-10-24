@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;GelMABioprinter/Core/Inc/Limit_switches&apos; to &apos;Limit_switches.h&apos;" description="Rename resource &apos;Limit_switches&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="Core/Inc/Limit_switches" name="Limit_switches.h" stamp="1753996870396" updateReferences="true"/>
+</session>

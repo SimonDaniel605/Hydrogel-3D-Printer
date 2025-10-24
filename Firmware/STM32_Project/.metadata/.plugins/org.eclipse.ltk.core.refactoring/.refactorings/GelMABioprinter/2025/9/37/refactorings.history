@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">&#x0A;<refactoring comment="Rename resource &apos;GelMABioprinter/Core/Inc/stepper_pins.h&apos; to &apos;system_pins.h&apos;" description="Rename resource &apos;stepper_pins.h&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="Core/Inc/stepper_pins.h" name="system_pins.h" stamp="1757696170599" updateReferences="true"/>&#x0A;<refactoring comment="Rename resource &apos;GelMABioprinter/Core/Inc/mosfets.h&apos; to &apos;mosfet.h&apos;" description="Rename resource &apos;mosfets.h&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="Core/Inc/mosfets.h" name="mosfet.h" stamp="1757710435147" updateReferences="true"/>
+</session>

@@ -1,0 +1,145 @@
+\chapter{Calculations}
+
+\section{Syringe Calculations}
+
+\textbf{Given:}
+\begin{align*}
+\text{Inner diameter of barrel (ID}_1\text{)} &= \SI{20}{\milli\meter} \\
+\text{Length of barrel (L}_1\text{)} &= \SI{80}{\milli\meter} \\
+\text{Inner diameter of nozzle (ID}_2\text{)} &= \SI{0.2}{\milli\meter} \\
+\text{Length of nozzle (L}_2\text{)} &= \SI{20}{\milli\meter}
+\end{align*}
+
+\noindent\textbf{Cross-sectional areas:}
+\begin{align*}
+A_1 &= \pi \left(10 \times 10^{-3}\right)^2 \approx 314 \times 10^{-6} \, \si{\meter\squared} \\
+A_2 &= \pi \left(0.1 \times 10^{-3}\right)^2 \approx 31.4 \times 10^{-9} \, \si{\meter\squared}
+\end{align*}
+
+\noindent\textbf{Max extrusion speed at nozzle:}
+\[
+v = \SI{5}{\milli\meter\per\second} = 5 \times 10^{-3} \, \si{\meter\per\second}
+\]
+
+\noindent\textbf{Volumetric flow rate:}
+\[
+Q = v \cdot A_2 = (5 \times 10^{-3}) \cdot (31.4 \times 10^{-9}) = 1.57 \times 10^{-10} \, \si{\meter\cubed\per\second}
+\]
+
+\noindent\textbf{Assumed viscosity:} 
+\[
+\mu = \SI{10}{\pascal\second}
+\]
+
+\noindent\textbf{Poiseuille's Law:}
+\[
+\Delta P = \frac{8 \mu L Q}{\pi r^4}
+\]
+
+\noindent\textbf{Total pressure required:}
+\begin{align*}
+P_{\text{atm}} &= \SI{101325}{\pascal} \\
+P_{\text{Plunger}} &= \Delta P_{\text{ID}_1} + \Delta P_{\text{ID}_2} + P_{\text{atm}} \\
+&= \frac{8 \cdot 10 \cdot 0.08 \cdot (1.57 \times 10^{-10})}{\pi (0.01)^4}
++ \frac{8 \cdot 10 \cdot 0.02 \cdot (1.57 \times 10^{-10})}{\pi (0.0001)^4}
++ 101325 \\
+&= \SI{900919}{\pascal} = \boxed{\SI{900.919}{\kilo\pascal}}
+\end{align*}
+
+\noindent\textbf{Required force:}
+\[
+F = P \cdot A_1 = (900\,919) \cdot (314 \times 10^{-6}) = \SI{282.889}{\newton}
+\]
+
+\noindent\textbf{Design force (with safety margin):}
+\[
+F_{\text{SF}} = \SI{300}{\newton}
+\]
+
+\noindent\textbf{Required torque for lead screw to produce axial force:}
+\begin{itemize}
+  \item Axial force: \( F = 300\,\text{N} \)
+  \item Coefficient of friction: \( \mu = 0.2 \)
+  \item Lead: \( l = 8\,\text{mm} = 0.008\,\text{m} \)
+  \item Pitch: \(p=2\,\text{mm}\)
+  \item Diameter: \(d=8\,\text{mm}\)
+  \item Mean diameter: \( d_m = d-\frac{p}{2} = 7\,\text{mm}\)
+\end{itemize}
+
+
+\begin{align*}
+T &= \frac{F d_m}{2} \cdot \left( \frac{l + \pi \mu d_m}{\pi d_m - \mu l} \right) \\
+  &= \frac{(300)(0.007)}{2} \cdot \left( \frac{0.008 + \pi(0.2)(0.007)}{\pi(0.007) - (0.2)(0.008)} \right) \\
+  &= 0.638\,\text{N}\cdot\text{m}
+\end{align*}
+
+
+\section{Z Axis Lead Screw Calculations}
+
+\textbf{Assumptions:}
+\begin{itemize}
+  \item Load mass: \( m = 1.86\,\,\text{kg} \)
+\end{itemize}
+
+\noindent\textbf{Required lifting force:}  
+
+\( F = mg = 1.86 \cdot 9.81 = 18.25\,\text{N} \)
+
+\noindent\textbf{Required torque for lead screw to produce axial force:}
+\begin{align*}
+T &= \frac{F d_m}{2} \cdot \left( \frac{l + \pi \mu d_m}{\pi d_m - \mu l} \right) \\
+  &= \frac{18.25 \cdot 0.007}{2} \cdot \left( \frac{0.008 + \pi \cdot 0.2 \cdot 0.007}{\pi \cdot 0.007 - 0.2 \cdot 0.008} \right) \\
+  &= 0.0388\,\text{N}\cdot\text{m}
+\end{align*}
+
+
+\section{X and Y Axis Belt and Pulley Calculations}
+
+\textbf{Assumptions:}
+\begin{itemize}
+  \item Mass: \( m_x = 0.39\,\text{kg} \), \( m_y = 1.02\,\text{kg}\)
+  \item Desired acceleration: \( a = 5\,\text{m/s}^2 \)
+  \item Coefficient of friction: \( \mu = 0.2 \)
+\end{itemize}
+
+\noindent\textbf{Required belt force along the X axis:}
+\[ F_{\text{x,inertia}} = m_x \cdot a = 0.39 \cdot 5 = 1.95\,\text{N} \]
+\[ F_{\text{x,friction}} = \mu \cdot m_x \cdot g = 0.2 \cdot 0.39\cdot 9.81 = 0.77\,\text{N} \]
+\[
+ F_{\text{x,total}} = F_{\text{x,inertia}} + F_{\text{x,friction}} = 1.95 + 0.77 = \boxed{2.72\,\text{N}}
+\]
+
+\noindent\textbf{Required pulley torque to produce belt force in the X direction:}
+
+\noindent A GT2 20T pulley has a diameter of:
+\[
+  d_p = \frac{t \cdot N}{\pi} = \frac{2 \cdot 20}{\pi} \approx 12.73\,\text{mm} = 0.01273\,\text{m}
+  \]
+
+Therefore, the required torque is:
+
+\[
+T = F \cdot \frac{d_p}{2} = 2.72 \cdot \frac{0.01273}{2} = \boxed{0.0173\,\text{Nm}}
+\]
+
+
+\noindent\textbf{Required belt force along the Y axis:}
+\[ F_{\text{y,inertia}} = m_y \cdot a = 1.02 \cdot 5 = 5.1\,\text{N} \]
+\[ F_{\text{y,friction}} = \mu \cdot m_y \cdot g = 0.2 \cdot 1.02 \cdot 9.81 = 2.00\,\text{N} \]
+\[
+ F_{\text{y,total}} = F_{\text{y,inertia}} + F_{\text{y,friction}} = 5.1 + 2.00 = \boxed{7.1\,\text{N}}
+\]
+
+
+\noindent\textbf{Required pulley torque to produce belt force in the Y direction:}
+
+\noindent A GT2 36T pulley has a diameter of:
+\[
+  d_p = \frac{t \cdot N}{\pi} = \frac{2 \cdot 36}{\pi} \approx 22.92\,\text{mm} = 0.02292\,\text{m}
+\]
+
+Therefore, the required torque is:
+
+\[
+T = F \cdot \frac{d_p}{2} = 7.1 \cdot \frac{0.02292}{2} = \boxed{0.08137\,\text{Nm}}
+\]

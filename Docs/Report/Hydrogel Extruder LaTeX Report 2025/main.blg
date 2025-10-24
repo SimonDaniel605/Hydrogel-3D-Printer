@@ -1,0 +1,82 @@
+This is BibTeX, Version 0.99d
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: main.aux
+Reallocating 'name_of_file' (item size: 1) to 14 items.
+The style file: stb-bib-eng-a.bst
+Reallocating 'name_of_file' (item size: 1) to 32 items.
+A level-1 auxiliary file: chaps-front/chap-plagiarism.aux
+Reallocating 'name_of_file' (item size: 1) to 29 items.
+A level-1 auxiliary file: chaps-front/chap-summary.aux
+Reallocating 'name_of_file' (item size: 1) to 26 items.
+A level-1 auxiliary file: chaps-front/chap-ecsa.aux
+Reallocating 'name_of_file' (item size: 1) to 33 items.
+A level-1 auxiliary file: chaps-front/chap-acknowledge.aux
+Reallocating 'name_of_file' (item size: 1) to 29 items.
+A level-1 auxiliary file: chaps-front/chap-symbols.aux
+Reallocating 'name_of_file' (item size: 1) to 26 items.
+A level-1 auxiliary file: chaps-main/chap-intro.aux
+Reallocating 'name_of_file' (item size: 1) to 31 items.
+A level-1 auxiliary file: chaps-main/chap-literature.aux
+Reallocating 'name_of_file' (item size: 1) to 32 items.
+A level-1 auxiliary file: chaps-main/chap-stakeholder.aux
+Reallocating 'name_of_file' (item size: 1) to 32 items.
+A level-1 auxiliary file: chaps-main/chap-engineering.aux
+Reallocating 'name_of_file' (item size: 1) to 44 items.
+A level-1 auxiliary file: chaps-main/chap-functionaldecomposition.aux
+Reallocating 'name_of_file' (item size: 1) to 31 items.
+A level-1 auxiliary file: chaps-main/chap-mechanical.aux
+Reallocating 'name_of_file' (item size: 1) to 31 items.
+A level-1 auxiliary file: chaps-main/chap-electronic.aux
+Reallocating 'name_of_file' (item size: 1) to 33 items.
+A level-1 auxiliary file: chaps-main/chap-experimental.aux
+Reallocating 'name_of_file' (item size: 1) to 31 items.
+A level-1 auxiliary file: chaps-main/chap-conclusion.aux
+Reallocating 'name_of_file' (item size: 1) to 28 items.
+A level-1 auxiliary file: chaps-append/chap-maths.aux
+Reallocating 'name_of_file' (item size: 1) to 33 items.
+A level-1 auxiliary file: chaps-append/chap-experiment.aux
+Reallocating 'name_of_file' (item size: 1) to 15 items.
+Database file #1: bib/bib-sample.bib
+Reallocating 'wiz_functions' (item size: 4) to 6000 items.
+Reallocating 'singl_function' (item size: 4) to 100 items.
+You've used 14 entries,
+            3324 wiz_defined-function locations,
+            755 strings with 8052 characters,
+and the built_in function-call counts, 13377 in all, are:
+= -- 1044
+> -- 372
+< -- 33
++ -- 145
+- -- 129
+* -- 1286
+:= -- 1617
+add.period$ -- 44
+call.type$ -- 14
+change.case$ -- 112
+chr.to.int$ -- 14
+cite$ -- 14
+duplicate$ -- 1284
+empty$ -- 1197
+format.name$ -- 251
+if$ -- 2729
+int.to.chr$ -- 1
+int.to.str$ -- 1
+missing$ -- 158
+newline$ -- 96
+num.names$ -- 56
+pop$ -- 347
+preamble$ -- 1
+purify$ -- 99
+quote$ -- 0
+skip$ -- 383
+stack$ -- 0
+substring$ -- 801
+swap$ -- 671
+text.length$ -- 26
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 120
+warning$ -- 0
+while$ -- 127
+width$ -- 0
+write$ -- 205

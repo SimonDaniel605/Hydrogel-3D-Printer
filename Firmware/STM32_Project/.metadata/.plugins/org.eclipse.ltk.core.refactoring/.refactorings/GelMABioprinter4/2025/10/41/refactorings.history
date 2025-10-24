@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;GelMABioprinter4/GelMABioprinter Debug.launch&apos; to &apos;GelMABioprinter4 Debug.launch&apos;" description="Rename resource &apos;GelMABioprinter Debug.launch&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="GelMABioprinter Debug.launch" name="GelMABioprinter4 Debug.launch" stamp="1760119126291" updateReferences="true"/>
+</session>

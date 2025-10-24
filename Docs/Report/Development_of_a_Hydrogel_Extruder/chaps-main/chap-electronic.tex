@@ -1,0 +1,152 @@
+\chapter{Embedded System Design}
+This chapter details the design and implementation of the embedded control system for the hydrogel bioprinter. The embedded system is responsible for coordinating the mechatronic system’s core functions, including stepper movement, memory management, bed and nozzle temperature measurement and control, extrusion force monitoring, and UV curing. The electronic hardware design takes the form of a custom PCB featuring an STM32F407VGT6 microcontroller, which executes the developed firmware to allow the printer to function.
+
+The embedded system was designed to meet the following requirements, developed for the electronic design in order to allow the whole system to meet the stakeholder requirements from chapter 3:
+
+\begin{itemize}
+    \item The system must safely supply regulated 3.3 V to the logic subsystems from a 12 V DC power supply that plugs into a standard wall socket.
+    \item The system must be able to drive up to five stepper motors through A4988 driver breakout modules.
+    \item The system must be able to receive real-time sensor data, including extrusion force from a load cell and temperature readings from thermocouples.
+    \item The device must implement switching control for a heater cartridge, Peltier module, UV curing light, and cooling fan.
+    \item The system is required to receive print task via a microSD card and store non-volatile data on an EEPROM module.
+    \item The printer must implement feedback control loops for extrusion pressure and temperature regulation.
+    \item The system must provide headers for unused controller pins to support future upgrades.
+\end{itemize}
+
+
+The final assembled hydrogel bioprinter, including the implemented embedded system, is shown below in Figure~\ref{fig:FinalPrinter}:
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.5]{figs/Bioprinter.png}
+    \caption{The Final Assembled Hydrogel Bioprinter}
+    \label{fig:FinalPrinter}
+\end{figure}
+
+\section{System Description}
+    This system is shown in the block diagram below in Figure~\ref{systemblockdiagram}.
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+  voltagecircle/.style = {circle, draw=black, thick, minimum size=1.2cm, align=center},
+  block/.style = {rectangle, draw=black, thick, minimum width=3.5cm, minimum height=1cm, align=center},
+  mcu/.style = {rectangle, draw=black, thick, minimum width=1cm, minimum height=3cm, align=center, fill=white},
+  io/.style = {rectangle, draw=black, dashed, thick, minimum width=2.5cm, minimum height=1cm, align=center},
+  arrow/.style = {thick, -{Latex[scale=1.2]}},
+  arrow2/.style = {thick, dashed, -{Latex[scale=1.2]}, color=red}
+]
+
+% Power supply chain
+\node[voltagecircle] (src) at (0, 8) {9V\\Source};
+\node[block] (reg5v) at (0, 6.2) {5V Regulator};
+\node[block] (reg3v3) at (12, 8) {3.3V Regulator};
+
+\node[mcu] (mcu) at (5, 4) {STM32G0B1RE\\MCU};
+
+% Right
+\node[io] (voltage) at (12, 6) {Voltage and Current Sensing Circuit};
+\node[io] (rfid) at (10, 4.5) {RFID Reader};
+\node[io] (sdcard) at (10.2, 3) {SD Card Module};
+\node[io] (oled) at (10, 1.5) {OLED Display};
+% Left
+\node[io] (relay) at (0, 4.5) {Relay Control};
+\node[io] (leds) at (0, 3) {LED Indicators};
+% Bottom
+\node[io] (keypad) at (2.5, 0.5) {Keypad and\\Button};
+\node[io] (uart) at (6, 0.5) {UART Interface};
+
+% SD Card (bottom)
+
+
+% Power flow arrows
+\draw[arrow2] (src.south) -- (reg5v.north);
+\draw[arrow2] (reg5v.east) -- (5,6.2) -- (5,8) -- (reg3v3.west);
+\draw[arrow2] (5,6.5) -- (mcu.north);
+\draw[arrow2] (reg5v.south) -- (relay.north);
+\draw[arrow2] (reg3v3.east) -- (16, 8) -- (16, 1.5) -- (oled.east);
+\draw[arrow2] (16, 6) -- (voltage.east);
+\draw[arrow2] (16, 4.5) -- (rfid.east);
+\draw[arrow2] (16, 3) -- (sdcard.east);
+% Data arrows to MCU
+\draw[arrow] (voltage.west) -- (8, 6) -- (8,5) -- (6.5,5);
+\draw[arrow] (rfid.west) -- (6.5,4.5);
+\draw[arrow] (6.5,4) -- (8,4) -- (8,3) -- (sdcard.west);
+\draw[arrow] (sdcard.west) -- (8,3) -- (8,4) -- (6.5,4) ;
+\draw[arrow] (6.5,3.5) -- (7.5,3.5) -- (7.5,1.5) -- (oled.west);
+
+\draw[arrow] (6, 2.5) -- (uart.north);
+\draw[arrow](uart.north) -- (6, 2.5);
+\draw[arrow] (keypad.north) -- (2.5, 1.5) -- (5, 1.5) -- (mcu.south);
+
+\draw[arrow] (3.5, 3) -- (leds.east);
+\draw[arrow] (3.5, 4.5) -- (relay.east);
+
+\end{tikzpicture}
+\caption{System Block Diagram of the Smart Prepaid Energy Controller}
+\label{systemblockdiagram}
+\end{figure}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\section{Hardware Design and Implementation}
+\subsection{Hardware Block Diagram and Description of Interaction}
+\subsection{Power Supply}
+\subsection{Power Debug LEDs}
+\subsection{Stepper Driver Interface}
+To limit the current, the potentiometer on each stepper driver needs to be adjusted to reach a desired reference voltage which can be obtained using the following formula: 
+
+\[
+I_{\text{limit}} \;=\; \frac{V_{\text{ref}}}{8 R_{\text{sense}}}
+\qquad\Longleftrightarrow\qquad
+V_{\text{ref}} \;=\; 8R_{\text{sense}}\cdot I_{\text{limit}}
+\]
+
+By looking at the drivers and checking the stepper motor specifications, it can be concluded that:
+\begin{itemize}
+    \item \(R_{\text{sense}} = 0.10~\Omega\)
+    \item \(I_{\text{limit}} = 1.0\text{A}\)
+\end{itemize}
+
+\[V_{\text{ref}} \;=\; 8\cdot 0.10\cdot 1.0=0.8\text{ A}\]
+
+\subsection{Limit Switches}
+\subsection{Memory Handling and Programmer Circuit}
+\subsection{Load Cell Circuit}
+\subsection{Thermocouple Circuit}
+\subsection{FET Switching Circuit}
+\subsection{PCB Design}
+
+\section{Software Design and Implementation}
+\subsection{Software Block Diagram and Description of Interaction}
+\subsection{Homing}
+\subsection{Stepper Logic}
+\subsection{USB Communication}
+\subsection{EEPROM}
+\subsection{Micro SD Card Reading}
+\subsection{Pressure Sensing}
+\subsection{Temperature Sensing}
+\subsection{Nozzle Heating PID Control}
+\subsection{Extrusion PID Control Logic}
+\subsection{Switching Logic}
+
+\section{Measurements and Results}
+
+

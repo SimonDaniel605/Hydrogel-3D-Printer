@@ -1,0 +1,16 @@
+# STM32CubeIDE
+Firmware/STM32_Project/Debug/
+Firmware/STM32_Project/Release/
+*.ioc~
+*.log
+*.elf
+
+# KiCad
+PCB/KiCad_Files/*-backups/
+PCB/KiCad_Files/*.bak
+PCB/KiCad_Files/.cache/
+PCB/KiCad_Files/*.tmp
+
+# General
+.DS_Store
+Thumbs.db

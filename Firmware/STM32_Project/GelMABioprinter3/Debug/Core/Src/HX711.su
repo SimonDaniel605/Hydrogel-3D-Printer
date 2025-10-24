@@ -1,0 +1,3 @@
+../Core/Src/HX711.c:16:6:microDelay	16	static
+../Core/Src/HX711.c:22:9:getHX711	24	static
+../Core/Src/HX711.c:49:5:weigh	32	static
