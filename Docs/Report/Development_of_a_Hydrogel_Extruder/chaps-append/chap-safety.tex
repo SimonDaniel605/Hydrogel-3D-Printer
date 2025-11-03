@@ -1,0 +1,24 @@
+\chapter{Risk Analysis and Safety Procedures}
+\section*{Safety Overview}
+The mechanical and embedded system design, assembly and testing of the hydrogel 3D printer were performed at home, in a personal workspace, rather than in an official university laboratory or workshop. The project was conducted using a low-voltage electronic system and non-hazardous materials, and therefore presented minimal risks to both the user and equipment. Safety considerations, associated with the project, focused mainly on the mechanical, electrical, and thermal hazards associated with component assembly, soldering, and system handling.
+
+The workspace was kept neat, tidy and ventilated to reduce the probability of tripping, remove solder fumes, and maintain easy access to equipment. Hazards such as the sharp edges of cut aluminium extrusions were eliminated by filing all edges after cutting. In cases where risks could not be completely eliminated, such as the presence of hot surfaces and nipping points, careful handling procedures were followed. This included keeping hands clear of the printer whenever in operation during the calibration stage and avoiding contact with heated components such as the nozzle and heat sinks until sufficient cooling time had elapsed after the printer was powered-down. To ensure the safe operation of the electronic system, protective measures were also implemented, such as limiting stepper driver current and verifying circuit connections with a multimeter before supplying power to the system.
+\section*{Activity based Risk Assessment}
+A risk assessment for the project is provided in Table~\ref{tab:risk}, which identifies the potential risks associated with each of project activity. The table also lists the corresponding steps to mitigate the likelihood and severity of each hazard to ensure personal safety (P) and equipment safety (E).
+\begin{table}[H]
+\centering
+\caption{Risk assessment for the hydrogel 3D printer's development}
+\label{tab:risk}
+\begin{tabular}{|p{2.4cm}|p{3.3cm}|p{1cm}|p{6.0cm}|}
+\hline
+\textbf{Activity} & \textbf{Risk} & \textbf{Risk Type} & \textbf{Mitigating Steps} \\ \hline
+Cutting aluminium & Cuts from sharp edges or saw blade & P & File all cut edges; clamp parts securely during cutting. \\ \hline
+Assembling the printer & Thread stripping or cracking of 3D printed parts & E & Avoid over-tightening bolts. \\ \hline
+Soldering & Burns and inhalation of fumes & P & Solder in a ventilated area; keep the iron in its stand when not in use. \\ \hline
+PCB assembly & Short circuits & E & Verify polarity of components; test for continuity; avoid over-soldering joints. \\ \hline
+Operating motors & Excessive current draw of drivers & E & Set current limits on stepper drivers. \\ \hline
+Operating the printer & Pinch points between moving parts & P & Keep hands clear of moving parts during operation. \\ \hline
+Hot surfaces & Burns from heated nozzle and heat sinks & P & Keep hands clear of heated parts during operation; allow adequate cooling time after power-down before handling. \\ \hline
+Circuit handling & Static discharge & E & Disconnect power before handling PCB; ensure correct breakout driver orientation. \\ \hline
+\end{tabular}
+\end{table}

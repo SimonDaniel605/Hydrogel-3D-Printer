@@ -29,25 +29,25 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   ALLOC
  12 .ARM.attributes 00000030  00000000  00000000  000162f8  2**0
                   CONTENTS, READONLY
- 13 .debug_info   0001ff1a  00000000  00000000  00016328  2**0
+ 13 .debug_info   0001feb5  00000000  00000000  00016328  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 14 .debug_abbrev 000050eb  00000000  00000000  00036242  2**0
+ 14 .debug_abbrev 000050d8  00000000  00000000  000361dd  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 15 .debug_aranges 00001c20  00000000  00000000  0003b330  2**3
+ 15 .debug_aranges 00001c18  00000000  00000000  0003b2b8  2**3
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 16 .debug_rnglists 000015c7  00000000  00000000  0003cf50  2**0
+ 16 .debug_rnglists 000015c1  00000000  00000000  0003ced0  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 17 .debug_macro  00028225  00000000  00000000  0003e517  2**0
+ 17 .debug_macro  00028225  00000000  00000000  0003e491  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 18 .debug_line   00027c69  00000000  00000000  0006673c  2**0
+ 18 .debug_line   00027c34  00000000  00000000  000666b6  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 19 .debug_str    000d623c  00000000  00000000  0008e3a5  2**0
+ 19 .debug_str    000d61ff  00000000  00000000  0008e2ea  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 20 .comment      00000043  00000000  00000000  001645e1  2**0
+ 20 .comment      00000043  00000000  00000000  001644e9  2**0
                   CONTENTS, READONLY
- 21 .debug_frame  00008d4c  00000000  00000000  00164624  2**2
+ 21 .debug_frame  00008d24  00000000  00000000  0016452c  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 22 .debug_line_str 00000081  00000000  00000000  0016d370  2**0
+ 22 .debug_line_str 00000081  00000000  00000000  0016d250  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 Disassembly of section .text:
@@ -3365,8 +3365,8 @@ static void Task_Once_StorageInit(void)
  8001c4e:	4603      	mov	r3, r0
  8001c50:	2b00      	cmp	r3, #0
  8001c52:	d10d      	bne.n	8001c70 <Task_Once_StorageInit+0x44>
-      /* Open for reading; file must exist. You can change the name here. */
-      if (f_open(&s_file, "PrintTask_5.csv", FA_READ) == FR_OK) {
+      /* Open for reading*/
+      if (f_open(&s_file, "PrintTask.csv", FA_READ) == FR_OK) {
  8001c54:	2201      	movs	r2, #1
  8001c56:	490d      	ldr	r1, [pc, #52]	@ (8001c8c <Task_Once_StorageInit+0x60>)
  8001c58:	480d      	ldr	r0, [pc, #52]	@ (8001c90 <Task_Once_StorageInit+0x64>)
@@ -3408,7 +3408,7 @@ static void Task_ReadSD(void)
  8001c98:	b580      	push	{r7, lr}
  8001c9a:	b096      	sub	sp, #88	@ 0x58
  8001c9c:	af06      	add	r7, sp, #24
-  /* Throttle so we don't do work every loop; ~20 Hz is plenty */
+  /* Read at 20 Hz */
   uint32_t now = HAL_GetTick();
  8001c9e:	f001 fb8f 	bl	80033c0 <HAL_GetTick>
  8001ca2:	6378      	str	r0, [r7, #52]	@ 0x34
@@ -3589,7 +3589,6 @@ static void Task_ReadSD(void)
  8001de2:	687b      	ldr	r3, [r7, #4]
  8001de4:	2b01      	cmp	r3, #1
  8001de6:	d15a      	bne.n	8001e9e <Task_ReadSD+0x206>
-      // Optional: USB_Printf("Bad CSV line: '%s'\n", p);
       continue;
     }
 
@@ -3598,7 +3597,7 @@ static void Task_ReadSD(void)
  8001dea:	4a3c      	ldr	r2, [pc, #240]	@ (8001edc <Task_ReadSD+0x244>)
  8001dec:	6013      	str	r3, [r2, #0]
 
-    /* Queue the motion. If queue is full, rewind EXACTLY the full line length. */
+    /* Queue the motion. If queue is full, rewind exactly the full line length. */
     bool ok = (Mode == 0)
  8001dee:	687b      	ldr	r3, [r7, #4]
       ? Stepper_QueueAbs(X, Y, Z, E, Speed)   // signature: (X,Y,Z,E,Speed)
@@ -3789,7 +3788,7 @@ static void Task_StreamUSB(void)
  8001f5a:	f7fe faf5 	bl	8000548 <__aeabi_f2d>
  8001f5e:	4604      	mov	r4, r0
  8001f60:	460d      	mov	r5, r1
-          "setNozTemp=%.2fC \nNozTemp=%.2fC \n Load=%d kg \n",setNozTempCmd, tempsC[0], loadCell_kg
+          "setNozTemp=%.2fC, NozTemp=%.2fC, Load=%d kg \n",setNozTempCmd, tempsC[0], loadCell_kg
  8001f62:	4b0d      	ldr	r3, [pc, #52]	@ (8001f98 <Task_StreamUSB+0x64>)
  8001f64:	681b      	ldr	r3, [r3, #0]
     USB_Printf(
@@ -3837,7 +3836,7 @@ static void Task_UpdatePWMs(void)
  8001fb2:	1ad3      	subs	r3, r2, r3
  8001fb4:	2b31      	cmp	r3, #49	@ 0x31
  8001fb6:	d955      	bls.n	8002064 <Task_UpdatePWMs+0xc4>
-    static uint16_t t = 0; // 0..199 for a 10 s full cycle
+    static uint16_t t = 0;
     t = (uint16_t)((t + 1) % 200);
  8001fb8:	4b2d      	ldr	r3, [pc, #180]	@ (8002070 <Task_UpdatePWMs+0xd0>)
  8001fba:	881b      	ldrh	r3, [r3, #0]

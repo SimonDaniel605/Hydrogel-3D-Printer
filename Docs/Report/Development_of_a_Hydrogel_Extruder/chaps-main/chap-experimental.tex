@@ -1,66 +1,77 @@
 \chapter{Experimental Design}
-The purpose of this chapter is to provide an experimental procedure that allows the custom hydrogel bioprinter to be calibrated for a specific desired hydrogel and to ensure user-safety and reliable operation by providing handling and cleaning instructions. 
+The purpose of this chapter is to provide an experimental procedure that allows the bioprinter to be calibrated for a specific hydrogel and to ensure user-safety and reliable operation by providing handling and cleaning instructions. 
 
-The printer's purpose is to serve as a research tool for Stellenbosch University’s Physiology Department, where it will be used both for the characterisation of bioinks and for the fabrication of hydrogel scaffolds to model and simulate cell growth and behaviour in biomedical research. To ensure the hydrogel extrusion system is integrated effectively into this research environment, the chapter establishes protocols for adjusting printing parameters to find the optimal settings for different gels, and details procedures to handle the bioprinter and to clean it after use to maintain hygiene and prevent contamination between experiments which ensures cell viability in cases where the printer is used to print cell-seeded prints. The procedure will be applied to a surrogate gel and documented as an example for use. These guidelines are intended to ensure that the bioprinter can be used consistently, safely, and effectively throughout its utilisation phase.
+The printer's purpose is to serve as a research tool for Stellenbosch University’s Physiology Department to characterise unknown bioinks and to fabricate hydrogel scaffolds to model and simulate cell behaviour in biomedical research. To ensure the hydrogel extrusion system is integrated effectively into this research environment, the chapter establishes protocols for adjusting printing parameters to find the optimal settings for different gels, and details procedures to handle the bioprinter and to clean it after use to maintain hygiene and prevent contamination between experiments which ensures cell viability in cases where the printer is used to print cell-seeded structures. The procedure was demonstrated on a surrogate gel for future reference. These guidelines are intended to ensure that the bioprinter can be used consistently, safely, and effectively throughout its utilisation phase.
 
 The calibration procedure involves applying a series of different experiments with the bioprinter and its bioink to optimise its print parameters within different categories of print operations (printing straight, curved, multiple adjacent, and stacked lines). 
-
 
 \section{Materials and Methods}
 \subsection{Materials}
 The experimental set-up requires the following equipment and materials:
 \begin{itemize}
 \item Custom 3D printer with syringe-based extruder
+\item HTS Silicone Grease
 \item Allen Key
+\item Laptop
+\item microSD card with microSD card adapter
 \item Bioink solution
-\item Laptop (with USB port)
-\item Vernier calliper
-\item Camera with mount
+\item Camera
+\item Calliper
 \end{itemize}
 
-For the surrogate gel (for the example calibration), the following equipment and materials are required:
+\noindent For the surrogate gel, the following equipment and materials are required:
 \begin{itemize}
-\item Store-bought Agar Agar powder 
+\item Store-bought Agar powder 
 \item Kettle
 \item Measurement jug
-\item Weight scale
+\item Measurement spoons (1 tsp, 1/2 tsp)
 \end{itemize}
 
-
-The bioprinter comprises of an extruder and a gantry. The extruder uses a lead screw to extrude the gel out of a custom aluminium syringe onto a cooled aluminium bed, and the extrusion force being applied to push the PVC plunger is measured using a load cell and sampled using an STM32F407VGT6 microcontroller. The extruder position relative to the gantry, is varied across 3D space by a gantry that uses belts to adjust the extruder position in the horizontal plain and uses a lead screw to adjust the nozzle height.
-
-The bioprinter’s settings are adjusted using a computer which is used to load the print settings (along with the print movement tasks) onto a microSD card which is inserted into and read by the bioprinter to perform each calibration trial. The laptop is also used to read transmitted USB information from the printer such as extrusion force and the temperature of the nozzle and bed. 
-
-After each print iteration, a photo is taken of the printed strands and its dimensions are analysed in software (ImageJ) to assess the print quality. This experimental set-up is shown below in Figure~\ref{fig:experimentalSetup}:
- \begin{figure}[h]
+\begin{figure}[H]
     \centering
-    \includegraphics[scale=0.7]{figs/ExperimentalSetup.png}
+    \includegraphics[scale=0.09]{figs/ExperimentalSetup.jpg}
     \caption{Experimental Set-up}
     \label{fig:experimentalSetup}
 \end{figure}
 
+ \begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.3]{figs/GIMP_Setup.png}
+    \caption{GIMP Set-up}
+    \label{fig:GIMPSetup}
+\end{figure}
+
+The bioprinter is comprised of an extruder and a gantry. The extruder uses a lead screw to extrude the gel out of a custom syringe onto a cooled aluminium bed. The extruder position relative to the printer frame, is varied across 3D space by a gantry that uses belts to adjust the extruder position in the horizontal plain and uses a lead screw to adjust the nozzle height.
+
+The bioprinter's print instructions are loaded via a microSD card which is inserted into and read by the bioprinter to perform each calibration trial. The laptop is also used to read transmitted USB information which is read in Termite. 
+
+After each print iteration, a photo is taken of the print bed and its dimensions are analysed using GIMP (Figure~\ref{fig:GIMPSetup}) to assess the print quality. This experimental set-up is shown in Figure~\ref{fig:experimentalSetup}.
+
+
 
 \subsection{Equipment Specifications}
-The experimental equipment needs to allow a printed line (or multiple lines) of hydrogel to be extruded onto a printing bed where the print line’s width and can be measured at points along the line without distorting the line’s dimensions over the course of the measurement process as this would decrease the reliability of the measurements. The experiment also needs a way to configure the bioprinter’s parameters and receive real time printing feedback.
+The experimental equipment must allow multiple strands of hydrogel to be extruded onto a printing surface where the line’s width can be measured at points along the line without distorting the line’s dimensions during the measurement process. 
 
 \subsubsection*{Gel Specifications}
 The gel specifications depend on the research needs of the end-user, with each hydrogel type and concentration coming with its own rheological properties and storage and handling protocols.
 
-This experimental procedure, however, was applied to a surrogate gel that is a agar-water mixture. In which store-bought Agar-agar powder is dissolved in water at 2\% w/v. Agar powder was used as it is easy to prepare and gels more rapidly when cooled compared to other store-bought alternatives such as gelatin powder.
+This experimental procedure, however, was applied to a surrogate gel that is an agar-water mixture. Store-bought Agar-agar powder is dissolved in water at 4.5\% w/v. Agar powder was used as it is easy to prepare and gels more rapidly when cooled compared to other store-bought alternatives such as gelatin. Agar is a suitable surrogate for GelMA as they are both thermally reversible and shear-thinning hydrogels whose viscosities that decrease with increasing temperature and solidify upon cooling, making agar a low-cost substitute for testing.
 
 \subsubsection*{Bioprinter Specifications}
 \begin{itemize}
-    \item \textbf{Extruder} – This consists of a syringe with a volume of 20\,ml and a nozzle diameter of 0.4\,mm. The nozzle is capable of reaching a maximum temperature of 95 $^{\circ}$C.
+    \item \textbf{Extruder} – This consists of a 25~ml syringe with a nozzle diameter of 1.0\,mm. The nozzle heater block is capable of reaching a maximum temperature of 230 $^{\circ}$C.
     
-    \item \textbf{Gantry} – The gantry is used to position the extruder in 3D space. Two NEMA 17 stepper motors drive belts that control the 2-axis motion in the horizontal plane. A leadscrew (also driven by a NEMA 17) with an 8\,mm lead is used to control the extruder’s vertical position.
+    \item \textbf{Gantry} – The gantry is used to position the extruder in 3D space. Two NEMA 17 stepper motors drive belts that control the 2-axis motion in the horizontal plane. A lead screw (also driven by a NEMA 17) with an 8\,mm lead is used to control the extruder’s vertical position.
     
-    \item \textbf{Bed} – The gel is printed on a 110\,mm $\times$ 168\,mm aluminium bed. The bed is capable of reaching a minimum temperature of 4 $^{\circ}$C.
+    \item \textbf{Bed} – The gel is printed on a 110\,mm $\times$ 168\,mm aluminium bed. The bed is capable of reaching a minimum temperature of 13 $^{\circ}$C.
 \end{itemize}
+\subsubsection*{Camera Specifications}
+Print sample photos are taken using a Nikon D5600 (DSLR) with an AF-S NIKKOR 50~mm f/1.8G SWM aspherical $\phi58$ lens. The camera operates in aperture priority mode with flash enabled, an aperture of f/4.5, and an image resolution of 6000 × 4000 pixels. Photographs are taken by hand under ambient lighting conditions.
 
 \subsubsection*{Software}
 \begin{itemize}
-    \item \textbf{ImageJ} – This is used to measure the dimensions of the print strands in images of each print iteration.
-    \item \textbf{MATLAB} – This is used to graph live data from the printer via USB connection between the laptop and bioprinter. The measurement data from the printing trials are also stored manually and are processed and plotted using MATLAB.
+    \item \textbf{GIMP} – This is used to distort the image to remove the angled perspective effect that varies between hand operated camera shots and measure the dimensions of the print strands for each print trial.
+    \item \textbf{MATLAB} – The measured data from the printing trials are stored manually and processed in MATLAB using the \texttt{Trial\_Processing.m} file in the project’s \href{https://github.com/SimonDaniel605/Hydrogel-3D-Printer/tree/main/Experiments}{GitHub repository's \texttt{Experiments} folder} \citep{Daniel2025_HydrogelPrinter}.
 \end{itemize}
 
 \subsection{Methods}
@@ -72,93 +83,237 @@ The variables identified, relating to the calibration procedure, are shown below
 \hline
 \textbf{Variable Type} & \textbf{Variables} \\
 \hline
-Independent Variables & Extrusion rate, printing speed, nozzle height, print line radius, layer count \\
-Dependent Variables   & Extrusion force, layer height, layer width, print quality, stack height \\
-Controlled Variables  & Gel concentration, print line length nozzle diameter, nozzle temperature, bed temperature \\
-Extraneous Variables  & Ambient temperature, vibrations \\
+Independent Variables & Extrusion rate, print speed, bed-nozzle height, print arc radius, line spacing \\
+Dependent Variables   & Layer width, layer height, print stability \\
+Controlled Variables  & Gel concentration, print line length, nozzle diameter \\
+Extraneous Variables  & Ambient temperature, vibrations, gel rheological properties \\
 \hline
 \end{longtable}
 
-During the analysis of results, the mean layer height and width, stack height, and standard deviation of the layer height and width (in mm) along each of the printed lines are tabulated against the varied printing parameters: extrusion rate (mm/s), printing speed (mm/s), nozzle height (mm), print line radius (mm) and layer count. The two standard deviations serve as separate measures of print quality, where high deviations indicate lower print stability and quality. The total mean height of multiple printed layers will also be measured and calculated along with its standards deviation and compared to its corresponding layer count and layer height increment (mm).
+During the analysis of results, the mean line width, the standard deviation of the line width (each in mm) along with the overall quality of each print trial is analysed and compared against the varied printing parameters: extrusion rate (mm/s), printing speed (mm/s), bed-nozzle height (mm), print circle radius (mm), horizontal line spacing (mm), and nozzle height increment (mm). The standard deviations serve as measures of print stability (by indicating consistent width), where high deviations indicate lower print stability and quality. Because the rate at which the ink gets extruded depends on the nozzle diameter, extrusion rate (in this chapter only) is defined as the speed (in mm/s) at which the plunger moves through the syringe.
 
-The extrusion force from the load cell, measured via the COM port using MATLAB, is also plotted against time for each of the different extrusion rates. The nozzle diameter affects both the speed and width of the extruded gel, influencing the resulting line width, height, and quality. These dependent variables are also affected by the rheological properties of the gel, which is why the nozzle diameter and gel concentration are kept constant as controlled variables.
+The controlled variables in the experiment are the nozzle diameter and gel concentration. The nozzle diameter influences the width of deposited strands and is therefore kept constant across all trials. The gel concentration affects the fluid behaviour of the solution and is held constant to minimise variations in flow properties between print tasks.
 
-Ambient temperature and environmental vibrations, including those from the printer itself, can also influence outcomes. However, these are considered extraneous variables and are not within the scope of control in this experiment.
+Ambient temperature and environmental vibrations, including those from the printer itself, can also influence outcomes. However, these are considered extraneous variables and are not within the scope of control in this experiment. Since the printer is intended to characterise unknown gels, the gel's rheological behaviour, even under constant concentration, is considered as an extraneous variable.
 
 \subsubsection*{Gel preparation}
 
-The following steps detail how to prepare the agar surrogate gel. It should be noted that these steps must only be followed when the bioprinter is ready to be loaded with the solution (after step 4 of the experimental set-up procedure) and the next print trial is intended to begin within the 5-10 minutes of the completion of the gels preparation to ensure that it does not gel prematurely before its printed.
+The following steps detail how to prepare the agar surrogate gel.
 
 \begin{enumerate}
-    \item Fill the kettle with water and heat water until boiling ($100^{\circ}$C).
+    \item Fill the kettle with water and heat water until boiling ($100~^{\circ}$C).
     \item From the kettle, pour the boiling water into a clean measurement jug until the bottom of the meniscus reaches the 100\,mL mark on the measuring jug.
-    \item Using a digital scale, weigh 2 g of agar-agar powder. 
-    \item Slowly mix the powder into the boiling water in the measurement jug. Slowly sprinkle the powder into the water, while stirring with the spoon. After all of of the powder has been sprinkled in the measurement jug, continue stirring until there are no visible clumps remaining in the solution.
+    \item Using the measuring spoons, add 1.5 teaspoons (4.5~g) of agar powder to the measurement jug. 
+    \item Mix the solution until homogeneous, and continue stirring every 10 minutes until an hour has passed since the solution was first stirred. 
+    \item After the first stir, complete steps 1 to 4 of the experimental set-up procedure.
 \end{enumerate}
 
 \subsubsection*{Experimental Set-up Procedure}
-Before the calibration can be conducted, the a set-up procedure must first be conducted. Due to the bioprinter's ability to heat its nozzle and syringe, it is best that this step is repeated before every printing trial (loaded onto the microSD card), to ensure the system operator does not come into direct contact with the potentially high syringe temperatures.
+Before the calibration, the a set-up procedure must first be conducted. 
 \begin{enumerate}
+    \item Plug the printer’s three-prong power plug into a standard power socket. The PCB indicator light should turn green, the gantry will home, and the bed cooling system will activate.
     \item Using the laptop, load the print settings and print tasks (according to the needs of the specific experimental trial that is being conducted) onto the microSD card.
-    \item Insert the card into the bioprinter circuit board's microSD port and connect the laptop to the printer's PCB via USB cable. A blue LED on the PCB will light up once the USB connection is established.
-    \item Ensure the MATLAB graphing software has been opened and is running.
-    \item Using the Allen Key, unbolt the syringe from the extruder assembly and unscrew the syringe hot-end from the metal syringe tip.
+    \item Using the Allen Key, unbolt the syringe from the extruder assembly and unscrew the syringe from the hot-end assembly.
     \item Check and ensure syringe is clean and press the plunger until it is fully depressed to the bottom of the syringe tube.
-    \item Once the gel solution is ready for use (see the gel preparation procedure or the handling/preparation steps of the desired bioink), submerge the tip of the syringe into the substance and pull the plunger until it reaches the end of the syringe or a sufficient volume of the solution is extracted.
-    \item Once the printer fluid has been loaded, wipe the syringe sections that were submerged during extraction, with a cloth.
-    \item Screw the hot-end assembly back on to the threaded syringe tip and mount the flanged syringe back onto the extruder platform using the bolts and Allen Key (make sure at least two bolts are fastened along the PCD (flange mounting holes).
-    \item Plug in the 3D printer's 3 prong plug into the wall socket to provide power to the system. The system will initialize according to the print settings on the microSD card and once it is homed and the bed and nozzle have reached their set temperature, the bioprinter will begin its print trial. 
+    \item Once the gel solution is ready for use, submerge the tip of the syringe into the substance and pull the plunger until it reaches the end of the syringe or a sufficient volume of the solution is extracted.
+    \item Once the printer fluid has been loaded, wipe the syringe sections that were submerged during extraction with a cloth.
+    \item Screw the hot-end assembly back on to the threaded syringe tip and mount the flanged syringe back onto the extruder platform using the bolts and Allen Key (make sure at least two bolts are fastened along the flange mounting holes.
+    \item Insert the card into the bioprinter circuit board's microSD port, and press the reset button to begin printing.
     \item Do not touch the printer during operation and keep the area around moving parts and nip points clear of loose items.
-    \item Monitor the bed and syringe temperature through MATLAB as well as the extrusion force to ensure safe printer operation.
-    \item Once the print trial is done, use a camera to take a photo of the results.
-    \item Analyse the results in ImageJ.
+    \item Once the print trial is done, use the camera to take a overhead photo of the print bed.
+    \item Analyse the results in GIMP.
     \item Perform clean-up procedure.
 \end{enumerate}
-\subsubsection*{Straight Line Test Procedure}
-
-Once the setup is complete, the following test procedure is performed:
-
-\begin{enumerate}
-    \item Use STM32CubeIDE to vary the extrusion rate (mm/s), printing speed (mm/s), and nozzle offset (mm).
-    \item Begin the extrusion process to deposit a 10\,mm long GelMA line onto the bed. Monitor the print using Termite.
-    \item Use MATLAB to acquire and process the time-based extrusion force data for each extrusion rate.
-    \item After printing, if no UV shielding is present, evacuate the room while the UV light cures the print for 5 minutes.
-    \item Re-enter the room and measure the printed line’s width and height at 10 equidistant points (1\,mm apart) using a digital caliper.
-    \item Record the mean and standard deviation of the 10 measurements for both width and height. These serve as metrics for print stability and quality.
-    \item Repeat each test condition three times. Compute 95\% confidence intervals for each of the four measured variables (mean and standard deviation of width and height) to quantify measurement uncertainty and evaluate repeatability.
-\end{enumerate}
-
-A proposed test matrix is shown in Table~\ref{tab:testmatrix}, which outlines the combination of printing parameters for each trial in the experiment.
-
-\begin{longtable}{ccc}
-\caption{Proposed Test Matrix for Each Experiment} \label{tab:testmatrix} \\
-\hline
-\textbf{Test No.} & \textbf{Printing Speed (mm/s)} & \textbf{Extrusion Speed (mm/s)} \\
-\hline
-1  & 1 & 0.025 \\
-2  & 1 & 0.050 \\
-3  & 1 & 0.075 \\
-4  & 1 & 0.100 \\
-5  & 2 & 0.025 \\
-6  & 2 & 0.050 \\
-7  & 2 & 0.075 \\
-8  & 2 & 0.100 \\
-9  & 3 & 0.025 \\
-10 & 3 & 0.050 \\
-11 & 3 & 0.075 \\
-12 & 3 & 0.100 \\
-13 & 4 & 0.025 \\
-14 & 4 & 0.050 \\
-15 & 4 & 0.075 \\
-16 & 4 & 0.100 \\
-\hline
-\end{longtable}
-These tests are split up into two experiments, two compare the variation of nozzle offset. In experiment A, the nozzle offset is set to 2mm and in experiment B, it is set to 4mm.
-
-\subsubsection*{Curved Line Test Procedure}
-
-\subsubsection*{Layer Stacking Test Procedure}
 
 \subsubsection*{Cleaning Procedure}
+To clean the bioprinter after use the following steps are taken:
+\begin{itemize}
+    \item Make sure the printer is disconnected from its power source, and wait for the circuit board's green light to completely turn off.
+    \item With a cloth, remove any prints from the printer bed and wipe the platform.
+    \item Use the Allen key to remove the syringe from the extruder platform.
+    \item Unscrew both the nozzle and syringe from the heater block.
+    \item Remove the plunger and pour any residual unsolidified liquid into a sink.
+    \item Rinse both the syringe and nozzle with warm water.
+    \item Fill the syringe with water and use the plunger to push it out to ensure there is no clogging.
+    \item Leave the syringe, nozzle, and plunger to dry.
+    \item Once dry apply a fresh coat of HTS silicone grease to the plunger head before reassembling the extruder.
+\end{itemize}
+\subsubsection*{GIMP Processing}
+Once the photos are taken, they must be processed and analysed in GIMP. 
+\begin{itemize}
+    \item Using the transformed tools scale the image to 6000x3928 to match the bed dimension's ratios.
+    \item Then use the perspective tool and drag the bed edges to precisely align the demarcated rectangle.
+    \item Go to \texttt{Scale Image} in the \texttt{Image} tab and set the X and Y pixels per mm to 35.7 and the image size should precisely match the bed dimensions of 168x110 mm.
+    \item Show a grid using \texttt{View} and then using \texttt{Configure Grid} in the \texttt{Image} tab, create horizontal spacings of 10~mm to ensure line widths are equally spaced, create vertical spacings of 0.1~mm to ensure 0.1~mm measurement accuracy, and offset the grid horizontally by 153.6~mm to ensure the vertical grid-lines align with the etched bed centre.
+    \item Using the measuring tool, measure the required line widths and manually store the results in the \texttt{Trial\_Processing.m} file in the project’s \href{https://github.com/SimonDaniel605/Hydrogel-3D-Printer/tree/main/Experiments}{GitHub repository's \texttt{Experiments} folder} \citep{Daniel2025_HydrogelPrinter}.
+\end{itemize}
+\subsubsection*{Nozzle Height Test}
+Once the setup is complete, the calibrations can begin. 6 different printing phases are conducted with each phase using its own PrintTask.csv file. These CSV files, along with the MATLAB scripts that generated them, can also be found in the \texttt{Experiments} folder of the project repository \citep{Daniel2025_HydrogelPrinter}. Each print task is repeated multiple times, and the trials exhibiting the fewest instances of temporary clogging or entrapped air bubbles (identified by random gaps along deposited strands) are included in the appendices (the rest are shown in the GitHub repository for transparency). This approach ensure the independent variable is the only factor influencing the dependant variables.  A description of the print plan of the nozzle height test can be seen below.
+
+\begin{enumerate}
+    \item The first experiment is to determine the optimal vertical nozzle height to print straight lines. 5 adjacent 100 mm straight lines are printed on the bed with a gantry speed of 20~mm/s and extrusion rate of 0.2 mm/s with 5 different nozzle offsets as in the proposed test matrix in Table~\ref{tab:heightmatrix}. This task is repeated 5 times.
+    \item The width of the 100 mm lines are measured at 11 equi-spaced points and the mean and standard deviation of these widths for each line are calculated.
+    \item The results are evaluated in the Discussion of Results section to determine the optimal height value, which is then used to print the lines in the next calibration phase.
+\end{enumerate}
+
+\subsubsection*{Speed Test}
+\begin{enumerate}
+    \item The second experiment determines the optimal print speed and extrusion rate. 16 straight lines (100 mm long) are printed across two print tasks with varying extrusion rates for different print speeds according to Table~\ref{tab:linetestmatrix}. This task is repeated 5 times.
+    \item The width of the 100 mm lines are measured at 11 equi-spaced points and the mean and standard deviation of these widths for each line are calculated.
+    \item The results are evaluated in the Discussion of Results section to determine the optimal height value, which is then used to print the lines in the next calibration phases.
+\end{enumerate}
+
+\subsubsection*{Curved Arc Test}
+\begin{enumerate}
+    \item The third experiment determines the optimal centripetal acceleration used to print a curved line. It does so by printing 5 concentric circles with differing radii according to the proposed test matrix in Table~\ref{tab:curvetestmatrix}. The previously determined print settings are used including tangential print speed which is held constant to ensure that the centripetal acceleration is differing due to the change in radius ($a_c=\frac{v^2}{r}$). This task is repeated 5 times.
+    \item The width of each circle's lines will be measured at 12 equi-spaced points (every $30^\circ$), and the mean and standard deviation of these widths for each circle are calculated, analysed, and evaluated in the Discussion of Results section.
+\end{enumerate}
+
+\subsubsection*{Adjacent Line Test}
+\begin{enumerate}
+    \item The goal of the fourth experiment is to determine the optimal horizontal spacing with which the nozzle is offset by when printing horizontal rectangles. It does so by printing 6 sets of 4 adjacent 50 mm lines, with each set varying in how much the nozzle is horizontally offset (proposed offsets in Table~\ref{tab:spacingmatrix}). The print settings determined from previous calibration stages are used and held constant between each rectangle speed. This task is repeated 5 times.
+    \item The results are process in GIMP and qualitatively analysed in the results section to determine the maximum line spacing trial that never forms gaps between  adjacent strands.
+    \item The optimal line spacing is used to print the next calibration task.
+\end{enumerate}
+
+\subsubsection*{Layer Stacking Test Procedure}
+\begin{enumerate}
+    \item The goal of the fifth experiment is to determine the optimal vertical nozzle height increase between successive scaffold layers. This is achieved by printing three 4 layer prisms with a target base of 30x30 mm, each with a different height increment (Table~\ref{tab:stackingmatrix}). The previously determined optimal print settings are used and held constant across each cuboid. This is repeated 4 times.
+    \item An overhead photograph is still taken for this trial to be processed in GIMP and an additional angled photograph is captured to illustrate the 3D nature of the print.
+    \item The calliper's depth rod is used to determine the overall scaffold height by inserting it until it contacts the bed surface, then sliding the calliper body down until its end aligns with the top of the printed structure. The calliper is kept vertical throughout this process.
+    \item The results are analysed to identify the vertical offset that produces the best print quality.
+\end{enumerate}
+\subsubsection*{Repeatability Test Procedure}
+\begin{enumerate}
+    \item To determine the repeatability of the printer with its optimised print settings, a sixth trial is conducted using the nozzle offset, extrusion rate, and print speed from Trials 1 and 2. Five 100~mm lines are printed on the bed. This is repeated three times. 
+    \item The width of the 100 mm lines are measured at 11 equi-spaced points and the mean and standard deviation of these widths for each line are calculated.
+    \item The results are evaluated in the Discussion of Results section to assess the repeatability of the printer's performance.
+\end{enumerate}
+
 
 \section{Discussion of Results and Conclusion}
+\subsection*{Trial 1 - Nozzle Height Test}
+The processed image of the first printing trial is shown in Figure~\ref{fig:phase1}, and the corresponding measurements obtained in GIMP and further processed in MATLAB are summarised in Table~\ref{tab:heightResults}. 
+
+The nozzle height that produced the line with the most consistent width and a printed length closest to the 100~mm target was 0.4~mm. Consequently, all subsequent print trials were performed with a first-layer nozzle offset of 0.4~mm.
+
+The line printed at the smallest offset (0.2 mm) was noticeably shorter. This is likely because the minimal gap maximised the contact area between the nozzle and the gel, thereby increasing the adhesive forces at the nozzle tip. As a result, the initial portion of the extruded strand tended to follow the nozzle for a brief period before settling, yielding a shorter printed strand.
+
+To assess whether the independent variable -- the nozzle height -- exhibited any meaningful correlation with the measured line properties, correlation coefficients were calculated in MATLAB. The correlation between nozzle height and line length, mean width, and width standard deviation was 0.131, -0.333, and -0.330. These weak correlations indicate that nozzle height did not have a strong influence on the printed line length, width, or variability. Since no statistical relationship was found between nozzle height and print quality, the 0.4~mm offset was selected as a reasonable baseline for the subsequent calibration phases.
+
+\subsection*{Trial 2 - Speed Test}
+Figures~\ref{fig:phase2a} and~\ref{fig:phase2b} show the processed images of the speed printing trial, in which print speed and extrusion rate were varied to evaluate their combined influence on line quality. The corresponding results are tabulated in Table~\ref{tab:lineResults}, and the correlation analysis is shown in Table~\ref{tab:phase2corr}. 
+
+The plots in Figure~\ref{fig:mplots} illustrate the relationships between the line characteristics and extrusion rate at each print speed. These figures show that increasing the extrusion rate produces a consistent rise in mean line width for all speeds, each exhibiting a clear linear relationship. This trend matches the expected behaviour, as a higher extrusion rate increases the volumetric flow of gel through the nozzle, thereby depositing more gel per unit time (when print speed is kept constant) and resulting in wider lines. This is further corroborated by the correlations in Table~\ref{tab:phase2corr} which show a strong positive correlation ($r = 0.97$–$1.00$).
+
+The plots and correlation analysis show a strong relationship between line length and extrusion rate ($r = 0.86$–$1.00$). Lines printed at higher extrusion rates were longer and more closely matched the 100~mm target length. This occurs because faster extrusion establishes the gel flow sooner, allowing the gel to contact and adhere to the bed closer to the intended start. At lower extrusion rates, the nozzle travels further before the delayed flow can achieve gel deposition, resulting in a shorter line.
+
+The effect of extrusion rate on the line width variation differed between print speeds. At print speeds between 20 and 25 mm/s, no correlation was found ($r \approx0$), indicating that increasing extrusion rate at low speeds does not affect print line width stability. When print speed increased to between 30 and 35 mm/s, the correlation became strongly positive, showing that higher extrusion rates at elevated speeds increased the likelihood of irregularities forming along the line.
+
+These results show that lines printed with lower print speeds and higher extrusion rates result in the most uniform and repeatable lines that more closely match the target line length. Based on this trend, a print speed of 20~mm/s and an extrusion rate of 0.4~mm/s were selected for the rest of the calibration process, as this setting yielded the most favourable combination of line width stability (with a mean of 4.2~mm) and length (99~mm).
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[t]{0.49\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{figs/LvExtrusionRate.png}
+        \caption{Length}
+        \label{fig:Lgraph}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.49\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{figs/WvExtrusionRate.png}
+        \caption{Mean Width}
+        \label{fig:Wgraph}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.55\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{figs/SvExtrusionRate.png}
+        \caption{Width Standard Deviation}
+        \label{fig:Sgraph}
+    \end{subfigure}
+    \caption{Graphs showing the relationship between line characteristics and extrusion rate}
+    \label{fig:mplots}
+\end{figure}
+
+\begin{table}[H]
+\centering
+\caption{Correlation between line characteristics and extrusion rate at different print speeds.}
+\label{tab:phase2corr}
+\begin{tabular}{>{\centering\arraybackslash}p{4.5cm} 
+                >{\centering\arraybackslash}p{2.4cm} 
+                >{\centering\arraybackslash}p{2.9cm} 
+                >{\centering\arraybackslash}p{2.4cm}}
+\hline
+\textbf{Print Speed (mm/s)} & 
+\textbf{Length} & 
+\textbf{Mean Width} & 
+\textbf{Std Dev} \\ 
+\hline
+20 & 0.97 & 0.99 & $-0.04$ \\
+25 & 1.00 & 1.00 & $-0.06$ \\
+30 & 0.86 & 1.00 & 0.92 \\
+35 & 0.98 & 0.97 & 0.62 \\
+\hline
+\end{tabular}
+\end{table}
+\subsection*{Trial 3 - Circle Test}
+The processed image of the bed with the printed circles is shown in Figure~\ref{fig:phase3} and each line's arc angle, mean width, and width variation are summarised in Table~\ref{tab:curveResults}.
+
+The arc angles traced out by the printed circles ranged from 352$^\circ$ to the 360$^\circ$ target. The tabulated results show little to no correlation between the arc angle and circle radius. MATLAB analysis yielded a correlation coefficient of 0.205 between radius and arc angle, indicating a weak positive relationship. Although weak, this relationship is consistent with expected behaviour as circles with larger radii correspond to longer arc lengths for a given angular displacement. Consequently, any delay before gel deposition will subtend a smaller angle (resulting in larger deposited arc angles) on circles with a larger radius compared to smaller ones. 
+
+The correlation coefficient between the mean width and circle radius was -0.052, indicating no significant relationship. This outcome is expected as the extrusion rate and print speed were held constant at the values determined in the previous calibration phase. As a result, the total volume of gel deposited per unit length of nozzle travel remained consistent, yielding mean widths (4.5 - 4.7~mm) that closely matched the mean width from Test 3 of Trial 2 (4.2~mm), which had the same print speed and extrusion rate.
+
+The correlation coefficient between radius and the standard deviation of the arc width was -0.518, indicating a moderate negative correlation. This suggests that the variability in strand width decreases as the radius increases which is expected as the centripetal acceleration of the printer nozzle decreases with larger radii, resulting in smoother motion.
+
+These tests showed that the printer can accurately trace circular paths with minimal width variability. The circle with a radius of 5~mm exhibited the highest width variability, with a standard deviation of 1.16~mm. This suggests that circles with radii below 15~mm, should be printed at reduced tangential speeds (and proportionally lower extrusion rates to maintain line width) to limit centripetal acceleration to a maximum value of $a_c=\frac{(20~\text{mm/s})^2}{15~mm}\approx26.7~\text{mm/s}^2$ to ensure consistent line quality.
+\subsection*{Trial 4 - Line Spacing Test}
+The results of the adjacent-line test are shown in Figure~\ref{fig:phase4}. In this iteration, the line spacing between adjacent parallel lines was varied to determine the maximum horizontal offset that could be applied repeatedly without gaps forming between successive lines during any iteration of the print trial. This trial was repeated five times, with Figure~\ref{fig:phase4} illustrating one representative iteration.
+
+Gimp was used to overlay a reference grid and to mark, in yellow, the intended start and end positions of the target rectangles defined in the input CSV file. The discrepancies between the yellow target lines and the actual printed rectangle edges were consistent for across all 6 tests. This consistency is expected, as the print speed and extrusion rate were held constant, and the initial deposition delay remained approximately the same for each batch. This explains why a small gap appears between the leftmost yellow line and the start of each rectangle, while the rightmost edge aligns closely with the intended endpoint, as each line was printed from left to right.
+
+While the minimum line spacing that prevented gaps varied between iterations, only the first three test batches consistently produced fully connected lines across all five iterations. The fourth (4.5~mm) and fifth (5.0~mm) batches occasionally formed without gaps but were not repeatable. Therefore, a line spacing of 4.0~mm was selected for the next calibration stage, as it represented the largest spacing that reliably produced rectangles without visible gaps. 
+
+\subsection*{Trial 5 - Layer Stacking Test}
+A top and angled view of the stacked-layer print are shown in Figures~\ref{fig:phase5a} and~\ref{fig:phase5b}. As before, the top view includes an overlaid reference grid with yellow squares indicating the target boundaries of the base of each four-layer cuboid. The heights of the cuboids were measured across four different print iterations using a calliper, and the results are shown below in Table~ \ref{tab:layerHeights}.
+\begin{table}[H]
+\centering
+\caption{Measured cuboid heights for different nozzle offsets}
+\label{tab:layerHeights}
+\begin{tabular}{>{\centering\arraybackslash}p{3cm} 
+                >{\centering\arraybackslash}p{1.6cm} 
+                >{\centering\arraybackslash}p{1.6cm} 
+                >{\centering\arraybackslash}p{1.6cm} 
+                >{\centering\arraybackslash}p{1.6cm} 
+                >{\centering\arraybackslash}p{1.5cm}}\hline
+\textbf{Nozzle Offset (mm)} & 
+\textbf{Height 1 (mm)} & 
+\textbf{Height 2 (mm)} & 
+\textbf{Height 3 (mm)} & 
+\textbf{Height 4 (mm)} & 
+\textbf{Mean (mm)} \\
+\hline
+1.0 & 4.0 & 4.0 & 4.5 & 4.5 & 4.2 \\
+1.5 & 5.0 & 5.0 & 5.5 & 5.5 & 5.2 \\
+2.0 & 5.0 & 5.0 & 6.0 & 6.0 & 5.5 \\
+\hline
+\end{tabular}
+\end{table}
+From Figure~\ref{fig:phase5a}, the effect of nozzle height increment on how well the printed bases matched the target boundaries can be observed. The first prism, printed with an offset of 1.0~mm between layers, matched the target boundaries the least, with its outer edges extending up to 5~mm beyond the yellow borders. The second and third batches (1.5 and 2.0~mm increments) aligned more closely with the yellow markings, with the third batch showing marginal improvement over the second.
+
+The poor alignment of the first prism is expected, as its mean total height was 4.2~mm. This indicates that the structure's height increased faster than the nozzle, causing the nozzle to become partially submerged in previously deposited layers. The submerged nozzle distorted the base by displacing deposited gel outward as it moved, pushing the edges beyond the intended boundary. In contrast, batches 2 and 3 had average heights of approximately 5.2 and 5.5~mm, corresponding to an average layer height of about 1.3-1.4~mm. This suggests that the nozzle should increase in height by this amount to prevent submersion and the consequent distortion. Since batches 2 and 3 used higher increments, their bases were more accurate and undistorted.
+
+The third batch differed from the previous ones in that the striations formed by the alternating lines on the top layer were more pronounced. This outcome is expected. Because each layer's true height is about 1.3-1.4~mm, a 2.0~mm nozzle increment means that the gap between the nozzle and the upper surface gradually increased during printing. This larger deposition height allowed the extruded gel to fall a distance before contact, creating rounder strands and a more visibly striated top surface.
+
+It can therefore be concluded that a nozzle height increment of 1.5~mm provides the most balanced performance. This value closely matches the measured layer height of 1.3-1.4~mm, ensuring that the nozzle remains above the previous layer while maintaining sufficient proximity to the scaffold's upper surface to produce smooth, undistorted structures with minimal striation. This trial concludes the calibration phase of the experiment and validates that the bioprinter is capable of producing repeatable, stable, multi-layered gel scaffolds, thereby confirming the overall success of the project.
+
+\subsection*{Trial 6 - Repeatability Test}
+An additional trial was conducted to characterise the repeatability of the system when printing gel using the optimal straight-line parameters identified in Trials 1 and 2. A vertical nozzle offset of 0.4~mm was used, with a print speed of 20~mm/s and an extrusion rate of 0.4~mm/s. Five 100~mm lines were printed on the bed plate under these identical conditions, as shown in Figure~\ref{fig:phase6}.
+
+The results are summarised in Table~\ref{tab:repeatedResults}. The standard deviation of the widths along each line ranged from 0.21~mm to 0.45~mm, indicating that the local line width varied by less than approximately 450 microns for the majority of the samples, indicating reasonably high stability of the extruded line for the soft gel material.
+
+Further MATLAB processing revealed a mean line width of 4.52~mm with a 95\% confidence interval of [4.35, 4.69]~mm, and a mean line length of 98.4~mm with a 95\% confidence interval of [97.7, 99.1]~mm. These narrow confidence intervals demonstrate that the printer can repeatedly produce lines of consistent length and width when printing with a fixed set of tuned parameters.
+
+Overall, this trial confirms that the printer operates with minimal random error, which further validates the reliability of the calibrated system for producing gel scaffolds.

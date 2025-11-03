@@ -58,11 +58,11 @@ for b = 1:n_blocks
     block_xy(b,2) = y_first + (b-1)*(base_y + gap_y);
 end
 
-% Stripe coordinate generators (exclusive of upper edge to avoid duplicates)
+% Stripe coordinate generators 
 x_offsets = 0:line_spacing:(base_x - 1e-9); 
 y_offsets = 0:line_spacing:(base_y - 1e-9);  
 
-% ΔE per printed stripe (depends on line length and speed)
+% Extrusion per printed stripe
 dE_0deg  = plunger_rate_mm_s * (base_y / v_line); % 0° stripes traverse base_y
 dE_90deg = plunger_rate_mm_s * (base_x / v_line); % 90° stripes traverse base_x
 

@@ -70,8 +70,8 @@ TIM_HandleTypeDef htim5;
 static float   setNozTempCmd = 0.0f; // Nozzle set temperature
 static uint8_t oneTimeDone = 0;
 static float tempsC[8] = {0};
-static uint8_t muxIndex = 0;
-static uint32_t lastTempKickMs = 0;
+//static uint8_t muxIndex = 0;
+//static uint32_t lastTempKickMs = 0;
 static uint32_t lastUsbTxMs = 0;
 static uint32_t lastPwmUpdateMs = 0;
 
@@ -109,22 +109,17 @@ void SystemTasks(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
-
-/* Note: your MAX6675 driver delays 250 ms inside each read.
-   We update one channel every ~300 ms in round-robin and always transmit
-   the latest array each second. */
-static void Task_SampleSensors(void)
+/*static void Task_SampleSensors(void)
 {
   uint32_t now = HAL_GetTick();
-  if ((now - lastTempKickMs) >= 300U) {
+  if ((now - lastTempKickMs) >= 300U) {*/
     /* small settle time through mux */
-    HAL_Delay(5);
+    /*HAL_Delay(5);
     tempsC[muxIndex] = Max6675_Read_Temp(); // blocks ~250 ms inside
     muxIndex = (uint8_t)((muxIndex + 1U) & 7U);
     lastTempKickMs = HAL_GetTick(); // update after the blocking read
   }
-}
+}*/
 /* USER CODE END 0 */
 
 /**
@@ -811,8 +806,8 @@ static void Task_Once_StorageInit(void)
   if (!s_sdReady) {
     MX_FATFS_Init();
     if (f_mount(&s_fs, "", 1) == FR_OK) {  // mount at root
-      /* Open for reading; file must exist. You can change the name here. */
-      if (f_open(&s_file, "PrintTask_5.csv", FA_READ) == FR_OK) {
+      /* Open for reading*/
+      if (f_open(&s_file, "PrintTask.csv", FA_READ) == FR_OK) {
         s_sdReady = 1;
         s_headerSkipped = 0;               // skip header on first read
       }
@@ -822,7 +817,7 @@ static void Task_Once_StorageInit(void)
 }
 static void Task_ReadSD(void)
 {
-  /* Throttle so we don't do work every loop; ~20 Hz is plenty */
+  /* Read at 20 Hz */
   uint32_t now = HAL_GetTick();
   if ((now - s_lastSDms) < 50U) return;
   s_lastSDms = now;
@@ -866,13 +861,12 @@ static void Task_ReadSD(void)
 
     /* Require ALL 7 fields; anything else is malformed => skip safely */
     if (n != 7 || (Mode != 0 && Mode != 1)) {
-      // Optional: USB_Printf("Bad CSV line: '%s'\n", p);
       continue;
     }
 
     setNozTempCmd = NozT;  // stash latest temp command
 
-    /* Queue the motion. If queue is full, rewind EXACTLY the full line length. */
+    /* Queue the motion. If queue is full, rewind exactly the full line length. */
     bool ok = (Mode == 0)
       ? Stepper_QueueAbs(X, Y, Z, E, Speed)   // signature: (X,Y,Z,E,Speed)
       : Stepper_QueueRel(X, Y, Z, E, Speed);
@@ -917,7 +911,7 @@ static void Task_UpdatePWMs(void)
 {
   uint32_t now = HAL_GetTick();
   if ((now - lastPwmUpdateMs) >= 50U) {
-    static uint16_t t = 0; // 0..199 for a 10 s full cycle
+    static uint16_t t = 0;
     t = (uint16_t)((t + 1) % 200);
 
     /* PB5 (TIM3_CH2): set heater to 50 Hz */

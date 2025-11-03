@@ -33,6 +33,6 @@ void Mosfet_SetEnabled(mosfet_id_t id, bool on);
    on_ms: on-window (e.g. 2000)
    Set on_ms==0 to disable this helper and leave Peltier under direct control. */
 void Mosfet_Peltier_SetTimedDuty(uint32_t period_ms, uint32_t on_ms);
-void Mosfet_Peltier_Update(uint32_t now_ms);  // call from your main loop
+void Mosfet_Peltier_Update(uint32_t now_ms);  // call from main loop
 
 #endif /* INC_MOSFET_H_ */

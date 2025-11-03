@@ -7,9 +7,9 @@
 #include "HX711.h"
 #include "main.h"
 
-extern TIM_HandleTypeDef htim2;   // <-- tells the compiler htim2 exists elsewheres
+extern TIM_HandleTypeDef htim2;
 uint32_t tare = 4273348;
-float knownOriginal = 15000000;  // in milli gram
+float knownOriginal = 15000000;  // in milligrams
 float knownHX711 = 25437;
 int weight;
 
