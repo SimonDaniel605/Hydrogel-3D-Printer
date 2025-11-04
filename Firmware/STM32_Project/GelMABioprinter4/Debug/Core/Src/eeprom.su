@@ -1,6 +1,0 @@
-../Core/Src/eeprom.c:17:6:Serial_EEPROM_Init	24	static
-../Core/Src/eeprom.c:21:6:Serial_EEPROM_SetWriteProtect	16	static
-../Core/Src/eeprom.c:26:6:Serial_EEPROM_ReadByte	40	static
-../Core/Src/eeprom.c:37:6:Serial_EEPROM_WriteByte	56	static
-../Core/Src/eeprom.c:59:6:Serial_EEPROM_ReadPage	40	static
-../Core/Src/eeprom.c:69:6:Serial_EEPROM_WritePage	56	static

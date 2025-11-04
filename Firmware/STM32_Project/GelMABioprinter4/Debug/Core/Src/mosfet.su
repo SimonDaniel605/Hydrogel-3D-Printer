@@ -1,3 +1,0 @@
-../Core/Src/mosfet.c:15:20:pwm_write	32	static
-../Core/Src/mosfet.c:24:6:Mosfet_Init	8	static
-../Core/Src/mosfet.c:45:6:Mosfet_SetDuty	16	static

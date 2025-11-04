@@ -1,2 +1,0 @@
-../Middlewares/Third_Party/FatFs/src/ff_unicode.c:9:7:ff_convert	2
-../Middlewares/Third_Party/FatFs/src/ff_unicode.c:10:7:ff_wtoupper	3
