@@ -15,3 +15,5 @@ PCB/KiCad_Files/*.tmp
 .DS_Store
 Thumbs.db
 *.xcf
+/Demo/Video Material/
+/Demo/Development of a Hydrogel 3D Printer 1.MOV
