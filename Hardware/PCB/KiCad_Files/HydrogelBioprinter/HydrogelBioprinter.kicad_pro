@@ -524,7 +524,7 @@
       "plot": "../Manufacturing/",
       "pos_files": "../Manufacturing/",
       "specctra_dsn": "",
-      "step": "../../../../../../OneDrive/Desktop/HydrogelBioprinter.step",
+      "step": "../../../Bioprinter Machine Design/Final System/Electronics Case/PCB/HydrogelBioprinter.step",
       "svg": "",
       "vrml": ""
     },

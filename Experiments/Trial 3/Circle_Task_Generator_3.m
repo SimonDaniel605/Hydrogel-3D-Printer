@@ -13,9 +13,9 @@ function Circle_Task_Generator_3()
 outFile             = 'PrintTask_3.csv';
 
 % Purge & center (absolute)
-purgeA              = [210,   270,  -90.0,  40,   0, 0, 30];
-purgeB              = [210,   270,  -90.0,   2,  10, 0, 30];
-center              = [135.0, 170.5, -98.8, 20,  10, 0, 30];
+purgeA              = [210,   270,  -90.0,  40,   0, 0, 45];
+purgeB              = [210,   270,  -90.0,   2,  10, 0, 45];
+center              = [135.0, 170.5, -98.8, 20,  10, 0, 45];
 
 % Circle plan
 radii_mm            = [5 15 25 35 45];    % concentric circles
@@ -26,7 +26,7 @@ nozzleZ             = -98.8;              % Z while printing
 travelZ             = -95.0;              % Z to travel between circles
 travel_speed_xy     = 20;                 % mm/s for XY travel without extrusion
 travel_speed_z      = 20;                 % mm/s for Z moves
-NozzleTemp          = 30;                 % set temp
+NozzleTemp          = 50;                 % set temp
 
 % CSV header
 header = "X,Y,Z,Speed,E,Mode,NozzleTemp";

@@ -1,0 +1,1082 @@
+/* USER CODE BEGIN Header */
+/**
+  ******************************************************************************
+  * @file           : main.c
+  * @brief          : Main program body
+  ******************************************************************************
+  * @attention
+  *
+  * Copyright (c) 2025 STMicroelectronics.
+  * All rights reserved.
+  *
+  * This software is licensed under terms that can be found in the LICENSE file
+  * in the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
+  *
+  ******************************************************************************
+  */
+/* USER CODE END Header */
+/* Includes ------------------------------------------------------------------*/
+#include "main.h"
+#include "fatfs.h"
+#include "usb_device.h"
+
+/* Private includes ----------------------------------------------------------*/
+/* USER CODE BEGIN Includes */
+#include <math.h>
+#include "string.h"
+#include <stdarg.h>
+#include <stdio.h>
+#include "usbd_def.h"
+#include "usbd_cdc_if.h"
+#include "system_pins.h"
+#include "delay_us.h"
+#include "stepper.h"
+#include "mosfet.h"
+/* USER CODE END Includes */
+
+/* Private typedef -----------------------------------------------------------*/
+/* USER CODE BEGIN PTD */
+
+/* USER CODE END PTD */
+
+/* Private define ------------------------------------------------------------*/
+/* USER CODE BEGIN PD */
+
+/* USER CODE END PD */
+
+/* Private macro -------------------------------------------------------------*/
+/* USER CODE BEGIN PM */
+
+/* USER CODE END PM */
+
+/* Private variables ---------------------------------------------------------*/
+I2C_HandleTypeDef hi2c2;
+
+SPI_HandleTypeDef hspi1;
+SPI_HandleTypeDef hspi3;
+
+TIM_HandleTypeDef htim1;
+TIM_HandleTypeDef htim2;
+TIM_HandleTypeDef htim3;
+TIM_HandleTypeDef htim4;
+TIM_HandleTypeDef htim5;
+
+/* USER CODE BEGIN PV */
+
+static float setNozTempCmd = 60.0f; // Nozzle set temperature
+static float nozDutyCmd = 0.0f;
+
+/* PID variables */
+static float pid_Kp = 3.0f;
+static float pid_Ki = 0.1f;
+static float pid_Kd = 3.0f;
+
+static float pid_integral = 0.0f;
+static float pid_prevError = 0.0f;
+static uint8_t pid_firstRun = 1;
+
+static uint8_t oneTimeDone = 0;
+static float tempsC[8] = {0};
+//static uint8_t muxIndex = 0;
+//static uint32_t lastTempKickMs = 0;
+static uint32_t lastUsbTxMs = 0;
+static uint32_t lastPwmUpdateMs = 0;
+
+// SD card variables
+static FATFS   s_fs;                   // filesystem object
+static FIL     s_file;                 // open CSV
+static uint8_t s_sdReady = 0;          // 0=not mounted/opened yet
+static uint8_t s_headerSkipped = 0;
+static uint32_t s_lastSDms = 0;        // throttle
+static char    s_line[160];            // one CSV line buffer
+
+uint8_t rx_buf[2];
+uint8_t tx_buf[2] = {0x00, 0x00};   // dummy bytes to generate clock
+char msg[100];
+/* USER CODE END PV */
+
+/* Private function prototypes -----------------------------------------------*/
+void SystemClock_Config(void);
+static void MX_GPIO_Init(void);
+static void MX_TIM1_Init(void);
+static void MX_TIM2_Init(void);
+static void MX_SPI1_Init(void);
+static void MX_TIM3_Init(void);
+static void MX_TIM4_Init(void);
+static void MX_I2C2_Init(void);
+static void MX_TIM5_Init(void);
+static void MX_SPI3_Init(void);
+/* USER CODE BEGIN PFP */
+void Home(TIM_HandleTypeDef *htim_for_delay);
+static void Task_Once_StorageInit(void);
+static void USB_Printf(const char *fmt, ...);
+static void Task_PIDandStreamUSB(void);
+static void Task_ReadSD(void);
+static void Task_UpdatePWMs(void);
+uint16_t MAX6675_ReadRaw(void);
+float MAX6675_ReadTemp(void);
+void SystemTasks(void);
+/* USER CODE END PFP */
+
+/* Private user code ---------------------------------------------------------*/
+/* USER CODE BEGIN 0 */
+
+/* USER CODE END 0 */
+
+/**
+  * @brief  The application entry point.
+  * @retval int
+  */
+int main(void)
+{
+
+  /* USER CODE BEGIN 1 */
+
+  /* USER CODE END 1 */
+
+  /* MCU Configuration--------------------------------------------------------*/
+
+  /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
+  HAL_Init();
+
+  /* USER CODE BEGIN Init */
+
+  /* USER CODE END Init */
+
+  /* Configure the system clock */
+  SystemClock_Config();
+
+  /* USER CODE BEGIN SysInit */
+
+  /* USER CODE END SysInit */
+
+  /* Initialize all configured peripherals */
+  MX_GPIO_Init();
+  MX_TIM1_Init();
+  MX_USB_DEVICE_Init();
+  MX_TIM2_Init();
+  MX_SPI1_Init();
+  MX_FATFS_Init();
+  MX_TIM3_Init();
+  MX_TIM4_Init();
+  MX_I2C2_Init();
+  MX_TIM5_Init();
+  MX_SPI3_Init();
+  /* USER CODE BEGIN 2 */
+  HAL_GPIO_WritePin(PELTIER_GPIO_Port, PELTIER_GPIO_Pin, GPIO_PIN_SET); // Give the bed time to cool
+
+
+  extern TIM_HandleTypeDef htim5;
+  Home(&htim5);
+
+  // Start the stepper ISR scheduler on TIM1
+  Stepper_Init_TIM1();
+  Stepper_ResetPosition(0,0,0,0);
+  Stepper_QueueAbs(135, 170.5, -99.7, 0, 30 );// The iteratively solved bed center
+  Stepper_QueueAbs(135, 190.5, -98, 0, 30 );// The iteratively solved bed center
+  //Stepper_QueueAbs(210, 270, -90, 0, 40 );
+  //Stepper_QueueAbs(210, 270, -90, 10, 2 );
+  //Stepper_QueueAbs(210,0,0,31,40);
+
+  Mosfet_Init();
+  HAL_GPIO_WritePin(PELTIER_GPIO_Port, PELTIER_GPIO_Pin, GPIO_PIN_SET); // Give the bed time to cool
+  HAL_TIM_Base_Start(&htim2);
+  /* USER CODE END 2 */
+
+  /* Infinite loop */
+  /* USER CODE BEGIN WHILE */
+  //HAL_GPIO_WritePin(SSPORT, SSPIN, GPIO_PIN_SET);
+  while (1)
+  {
+	SystemTasks();
+    /* USER CODE END WHILE */
+
+    /* USER CODE BEGIN 3 */
+  }
+  /* USER CODE END 3 */
+}
+
+/**
+  * @brief System Clock Configuration
+  * @retval None
+  */
+void SystemClock_Config(void)
+{
+  RCC_OscInitTypeDef RCC_OscInitStruct = {0};
+  RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
+
+  /** Configure the main internal regulator output voltage
+  */
+  __HAL_RCC_PWR_CLK_ENABLE();
+  __HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE1);
+
+  /** Initializes the RCC Oscillators according to the specified parameters
+  * in the RCC_OscInitTypeDef structure.
+  */
+  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE;
+  RCC_OscInitStruct.HSEState = RCC_HSE_ON;
+  RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
+  RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
+  RCC_OscInitStruct.PLL.PLLM = 8;
+  RCC_OscInitStruct.PLL.PLLN = 168;
+  RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV2;
+  RCC_OscInitStruct.PLL.PLLQ = 7;
+  if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
+  {
+    Error_Handler();
+  }
+
+  /** Initializes the CPU, AHB and APB buses clocks
+  */
+  RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
+                              |RCC_CLOCKTYPE_PCLK1|RCC_CLOCKTYPE_PCLK2;
+  RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
+  RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
+  RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV4;
+  RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV2;
+
+  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_5) != HAL_OK)
+  {
+    Error_Handler();
+  }
+}
+
+/**
+  * @brief I2C2 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_I2C2_Init(void)
+{
+
+  /* USER CODE BEGIN I2C2_Init 0 */
+
+  /* USER CODE END I2C2_Init 0 */
+
+  /* USER CODE BEGIN I2C2_Init 1 */
+
+  /* USER CODE END I2C2_Init 1 */
+  hi2c2.Instance = I2C2;
+  hi2c2.Init.ClockSpeed = 100000;
+  hi2c2.Init.DutyCycle = I2C_DUTYCYCLE_2;
+  hi2c2.Init.OwnAddress1 = 0;
+  hi2c2.Init.AddressingMode = I2C_ADDRESSINGMODE_7BIT;
+  hi2c2.Init.DualAddressMode = I2C_DUALADDRESS_DISABLE;
+  hi2c2.Init.OwnAddress2 = 0;
+  hi2c2.Init.GeneralCallMode = I2C_GENERALCALL_DISABLE;
+  hi2c2.Init.NoStretchMode = I2C_NOSTRETCH_DISABLE;
+  if (HAL_I2C_Init(&hi2c2) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN I2C2_Init 2 */
+
+  /* USER CODE END I2C2_Init 2 */
+
+}
+
+/**
+  * @brief SPI1 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_SPI1_Init(void)
+{
+
+  /* USER CODE BEGIN SPI1_Init 0 */
+
+  /* USER CODE END SPI1_Init 0 */
+
+  /* USER CODE BEGIN SPI1_Init 1 */
+
+  /* USER CODE END SPI1_Init 1 */
+  /* SPI1 parameter configuration*/
+  hspi1.Instance = SPI1;
+  hspi1.Init.Mode = SPI_MODE_MASTER;
+  hspi1.Init.Direction = SPI_DIRECTION_2LINES;
+  hspi1.Init.DataSize = SPI_DATASIZE_8BIT;
+  hspi1.Init.CLKPolarity = SPI_POLARITY_LOW;
+  hspi1.Init.CLKPhase = SPI_PHASE_1EDGE;
+  hspi1.Init.NSS = SPI_NSS_SOFT;
+  hspi1.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_256;
+  hspi1.Init.FirstBit = SPI_FIRSTBIT_MSB;
+  hspi1.Init.TIMode = SPI_TIMODE_DISABLE;
+  hspi1.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;
+  hspi1.Init.CRCPolynomial = 10;
+  if (HAL_SPI_Init(&hspi1) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN SPI1_Init 2 */
+
+  /* USER CODE END SPI1_Init 2 */
+
+}
+
+/**
+  * @brief SPI3 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_SPI3_Init(void)
+{
+
+  /* USER CODE BEGIN SPI3_Init 0 */
+
+  /* USER CODE END SPI3_Init 0 */
+
+  /* USER CODE BEGIN SPI3_Init 1 */
+
+  /* USER CODE END SPI3_Init 1 */
+  /* SPI3 parameter configuration*/
+  hspi3.Instance = SPI3;
+  hspi3.Init.Mode = SPI_MODE_MASTER;
+  hspi3.Init.Direction = SPI_DIRECTION_2LINES;
+  hspi3.Init.DataSize = SPI_DATASIZE_8BIT;
+  hspi3.Init.CLKPolarity = SPI_POLARITY_LOW;
+  hspi3.Init.CLKPhase = SPI_PHASE_1EDGE;
+  hspi3.Init.NSS = SPI_NSS_SOFT;
+  hspi3.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_128;
+  hspi3.Init.FirstBit = SPI_FIRSTBIT_MSB;
+  hspi3.Init.TIMode = SPI_TIMODE_DISABLE;
+  hspi3.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;
+  hspi3.Init.CRCPolynomial = 10;
+  if (HAL_SPI_Init(&hspi3) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN SPI3_Init 2 */
+
+  /* USER CODE END SPI3_Init 2 */
+
+}
+
+/**
+  * @brief TIM1 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_TIM1_Init(void)
+{
+
+  /* USER CODE BEGIN TIM1_Init 0 */
+
+  /* USER CODE END TIM1_Init 0 */
+
+  TIM_ClockConfigTypeDef sClockSourceConfig = {0};
+  TIM_MasterConfigTypeDef sMasterConfig = {0};
+
+  /* USER CODE BEGIN TIM1_Init 1 */
+
+  /* USER CODE END TIM1_Init 1 */
+  htim1.Instance = TIM1;
+  htim1.Init.Prescaler = 167;
+  htim1.Init.CounterMode = TIM_COUNTERMODE_UP;
+  htim1.Init.Period = 65535;
+  htim1.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
+  htim1.Init.RepetitionCounter = 0;
+  htim1.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+  if (HAL_TIM_Base_Init(&htim1) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sClockSourceConfig.ClockSource = TIM_CLOCKSOURCE_INTERNAL;
+  if (HAL_TIM_ConfigClockSource(&htim1, &sClockSourceConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
+  sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
+  if (HAL_TIMEx_MasterConfigSynchronization(&htim1, &sMasterConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN TIM1_Init 2 */
+
+  /* USER CODE END TIM1_Init 2 */
+
+}
+
+/**
+  * @brief TIM2 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_TIM2_Init(void)
+{
+
+  /* USER CODE BEGIN TIM2_Init 0 */
+
+  /* USER CODE END TIM2_Init 0 */
+
+  TIM_ClockConfigTypeDef sClockSourceConfig = {0};
+  TIM_MasterConfigTypeDef sMasterConfig = {0};
+
+  /* USER CODE BEGIN TIM2_Init 1 */
+
+  /* USER CODE END TIM2_Init 1 */
+  htim2.Instance = TIM2;
+  htim2.Init.Prescaler = 71;
+  htim2.Init.CounterMode = TIM_COUNTERMODE_UP;
+  htim2.Init.Period = 65535;
+  htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
+  htim2.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+  if (HAL_TIM_Base_Init(&htim2) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sClockSourceConfig.ClockSource = TIM_CLOCKSOURCE_INTERNAL;
+  if (HAL_TIM_ConfigClockSource(&htim2, &sClockSourceConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
+  sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
+  if (HAL_TIMEx_MasterConfigSynchronization(&htim2, &sMasterConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN TIM2_Init 2 */
+
+  /* USER CODE END TIM2_Init 2 */
+
+}
+
+/**
+  * @brief TIM3 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_TIM3_Init(void)
+{
+
+  /* USER CODE BEGIN TIM3_Init 0 */
+
+  /* USER CODE END TIM3_Init 0 */
+
+  TIM_ClockConfigTypeDef sClockSourceConfig = {0};
+  TIM_MasterConfigTypeDef sMasterConfig = {0};
+  TIM_OC_InitTypeDef sConfigOC = {0};
+
+  /* USER CODE BEGIN TIM3_Init 1 */
+
+  /* USER CODE END TIM3_Init 1 */
+  htim3.Instance = TIM3;
+  htim3.Init.Prescaler = 8399;
+  htim3.Init.CounterMode = TIM_COUNTERMODE_UP;
+  htim3.Init.Period = 1999;
+  htim3.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
+  htim3.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_ENABLE;
+  if (HAL_TIM_Base_Init(&htim3) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sClockSourceConfig.ClockSource = TIM_CLOCKSOURCE_INTERNAL;
+  if (HAL_TIM_ConfigClockSource(&htim3, &sClockSourceConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  if (HAL_TIM_PWM_Init(&htim3) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
+  sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
+  if (HAL_TIMEx_MasterConfigSynchronization(&htim3, &sMasterConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sConfigOC.OCMode = TIM_OCMODE_PWM1;
+  sConfigOC.Pulse = 0;
+  sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
+  sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
+  if (HAL_TIM_PWM_ConfigChannel(&htim3, &sConfigOC, TIM_CHANNEL_2) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN TIM3_Init 2 */
+
+  /* USER CODE END TIM3_Init 2 */
+  HAL_TIM_MspPostInit(&htim3);
+
+}
+
+/**
+  * @brief TIM4 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_TIM4_Init(void)
+{
+
+  /* USER CODE BEGIN TIM4_Init 0 */
+
+  /* USER CODE END TIM4_Init 0 */
+
+  TIM_ClockConfigTypeDef sClockSourceConfig = {0};
+  TIM_MasterConfigTypeDef sMasterConfig = {0};
+  TIM_OC_InitTypeDef sConfigOC = {0};
+
+  /* USER CODE BEGIN TIM4_Init 1 */
+
+  /* USER CODE END TIM4_Init 1 */
+  htim4.Instance = TIM4;
+  htim4.Init.Prescaler = 0;
+  htim4.Init.CounterMode = TIM_COUNTERMODE_UP;
+  htim4.Init.Period = 4199;
+  htim4.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
+  htim4.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_ENABLE;
+  if (HAL_TIM_Base_Init(&htim4) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sClockSourceConfig.ClockSource = TIM_CLOCKSOURCE_INTERNAL;
+  if (HAL_TIM_ConfigClockSource(&htim4, &sClockSourceConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  if (HAL_TIM_PWM_Init(&htim4) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
+  sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
+  if (HAL_TIMEx_MasterConfigSynchronization(&htim4, &sMasterConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sConfigOC.OCMode = TIM_OCMODE_PWM1;
+  sConfigOC.Pulse = 0;
+  sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
+  sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
+  if (HAL_TIM_PWM_ConfigChannel(&htim4, &sConfigOC, TIM_CHANNEL_1) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  if (HAL_TIM_PWM_ConfigChannel(&htim4, &sConfigOC, TIM_CHANNEL_2) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN TIM4_Init 2 */
+
+  /* USER CODE END TIM4_Init 2 */
+  HAL_TIM_MspPostInit(&htim4);
+
+}
+
+/**
+  * @brief TIM5 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_TIM5_Init(void)
+{
+
+  /* USER CODE BEGIN TIM5_Init 0 */
+
+  /* USER CODE END TIM5_Init 0 */
+
+  TIM_ClockConfigTypeDef sClockSourceConfig = {0};
+  TIM_MasterConfigTypeDef sMasterConfig = {0};
+
+  /* USER CODE BEGIN TIM5_Init 1 */
+
+  /* USER CODE END TIM5_Init 1 */
+  htim5.Instance = TIM5;
+  htim5.Init.Prescaler = 83;
+  htim5.Init.CounterMode = TIM_COUNTERMODE_UP;
+  htim5.Init.Period = 4294967295;
+  htim5.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
+  htim5.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+  if (HAL_TIM_Base_Init(&htim5) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sClockSourceConfig.ClockSource = TIM_CLOCKSOURCE_INTERNAL;
+  if (HAL_TIM_ConfigClockSource(&htim5, &sClockSourceConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
+  sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
+  if (HAL_TIMEx_MasterConfigSynchronization(&htim5, &sMasterConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN TIM5_Init 2 */
+
+  /* USER CODE END TIM5_Init 2 */
+
+}
+
+/**
+  * @brief GPIO Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_GPIO_Init(void)
+{
+  GPIO_InitTypeDef GPIO_InitStruct = {0};
+/* USER CODE BEGIN MX_GPIO_Init_1 */
+/* USER CODE END MX_GPIO_Init_1 */
+
+  /* GPIO Ports Clock Enable */
+  __HAL_RCC_GPIOE_CLK_ENABLE();
+  __HAL_RCC_GPIOH_CLK_ENABLE();
+  __HAL_RCC_GPIOC_CLK_ENABLE();
+  __HAL_RCC_GPIOA_CLK_ENABLE();
+  __HAL_RCC_GPIOB_CLK_ENABLE();
+  __HAL_RCC_GPIOD_CLK_ENABLE();
+
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(GPIOE, GPIO_PIN_6|GPIO_PIN_7, GPIO_PIN_SET);
+
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_RESET);
+
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(SPI1_CS_GPIO_Port, SPI1_CS_Pin, GPIO_PIN_SET);
+
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_5|GPIO_PIN_8, GPIO_PIN_RESET);
+
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_15|GPIO_PIN_4, GPIO_PIN_RESET);
+
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(GPIOE, GPIO_PIN_8|GPIO_PIN_9|GPIO_PIN_10|GPIO_PIN_11
+                          |GPIO_PIN_12|GPIO_PIN_13|GPIO_PIN_14|GPIO_PIN_15, GPIO_PIN_RESET);
+
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(GPIOD, GPIO_PIN_8, GPIO_PIN_SET);
+
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(GPIOD, GPIO_PIN_9|GPIO_PIN_10|GPIO_PIN_11, GPIO_PIN_RESET);
+
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_6|GPIO_PIN_7, GPIO_PIN_SET);
+
+  /*Configure GPIO pins : PE6 PE7 PE8 PE9
+                           PE10 PE11 PE12 PE13
+                           PE14 PE15 */
+  GPIO_InitStruct.Pin = GPIO_PIN_6|GPIO_PIN_7|GPIO_PIN_8|GPIO_PIN_9
+                          |GPIO_PIN_10|GPIO_PIN_11|GPIO_PIN_12|GPIO_PIN_13
+                          |GPIO_PIN_14|GPIO_PIN_15;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
+
+  /*Configure GPIO pins : PC0 PC1 PC2 */
+  GPIO_InitStruct.Pin = GPIO_PIN_0|GPIO_PIN_1|GPIO_PIN_2;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  GPIO_InitStruct.Pull = GPIO_PULLUP;
+  HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : PA3 */
+  GPIO_InitStruct.Pin = GPIO_PIN_3;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : SPI1_CS_Pin */
+  GPIO_InitStruct.Pin = SPI1_CS_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_PULLUP;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(SPI1_CS_GPIO_Port, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : SPI1_CD_Pin */
+  GPIO_InitStruct.Pin = SPI1_CD_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING_FALLING;
+  GPIO_InitStruct.Pull = GPIO_PULLUP;
+  HAL_GPIO_Init(SPI1_CD_GPIO_Port, &GPIO_InitStruct);
+
+  /*Configure GPIO pins : PC5 PC6 PC7 PC8 */
+  GPIO_InitStruct.Pin = GPIO_PIN_5|GPIO_PIN_6|GPIO_PIN_7|GPIO_PIN_8;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
+
+  /*Configure GPIO pins : PB1 PB2 PB15 PB4 */
+  GPIO_InitStruct.Pin = GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_15|GPIO_PIN_4;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+
+  /*Configure GPIO pins : PD8 PD9 PD10 PD11 */
+  GPIO_InitStruct.Pin = GPIO_PIN_8|GPIO_PIN_9|GPIO_PIN_10|GPIO_PIN_11;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : PD12 */
+  GPIO_InitStruct.Pin = GPIO_PIN_12;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  GPIO_InitStruct.Pull = GPIO_PULLUP;
+  HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
+
+/* USER CODE BEGIN MX_GPIO_Init_2 */
+/* USER CODE END MX_GPIO_Init_2 */
+}
+
+/* USER CODE BEGIN 4 */
+// Homing function
+void Home(TIM_HandleTypeDef *htim_for_delay){
+    const uint32_t pulse_high_us = 5;    // >1 µs is required by A4988 datasheet
+    const uint32_t z_between_us  = 150;  // 16 Microsteps + TR8x8 lead screw => 16.13 mm/s
+    const uint32_t y_between_us  = 1390; // 16 Microsteps + GT2 36T belt     => 16.13 mm/s
+    const uint32_t x_between_us  = 770;  // 16 Microsteps + GT2 20T belt     => 16.13 mm/s
+
+    delay_us_init(htim_for_delay); 						    // pass &htim from main.c
+    HAL_GPIO_WritePin(EN_Port, EN_Pin, GPIO_PIN_RESET);     // Enable outputs (LOW = enabled)
+    HAL_GPIO_WritePin(SLEEP_Port, SLEEP_Pin, GPIO_PIN_SET); //release reset (HIGH)
+    HAL_GPIO_WritePin(RESET_Port, RESET_Pin, GPIO_PIN_SET); //Disable sleep (HIGH)
+
+    // Microstep Settings
+    HAL_GPIO_WritePin(M0_Port, M0_Pin, GPIO_PIN_SET);
+    HAL_GPIO_WritePin(M1_Port, M1_Pin, GPIO_PIN_SET);
+    HAL_GPIO_WritePin(M2_Port, M2_Pin, GPIO_PIN_SET);
+
+    // Homing direction
+    HAL_GPIO_WritePin(DIR_Z_Port, DIR_Z_Pin, GPIO_PIN_SET);
+    HAL_GPIO_WritePin(DIR_Y_Port, DIR_Y_Pin, GPIO_PIN_SET);
+    HAL_GPIO_WritePin(DIR_X_Port, DIR_X_Pin, GPIO_PIN_RESET);
+
+    delay_us(10); // Delay for latency
+
+    //Home Z axis
+    while (HAL_GPIO_ReadPin(LIMIT_Z_Port, LIMIT_Z_Pin) == GPIO_PIN_SET) {
+        HAL_GPIO_WritePin(STEP_Z_Port, STEP_Z_Pin, GPIO_PIN_SET);
+        delay_us(pulse_high_us);
+        HAL_GPIO_WritePin(STEP_Z_Port, STEP_Z_Pin, GPIO_PIN_RESET);
+        delay_us(z_between_us);
+    }
+
+    //Home Y axis
+    while (HAL_GPIO_ReadPin(LIMIT_Y_Port, LIMIT_Y_Pin) == GPIO_PIN_SET) {
+        HAL_GPIO_WritePin(STEP_Y_Port, STEP_Y_Pin, GPIO_PIN_SET);
+        delay_us(pulse_high_us);
+        HAL_GPIO_WritePin(STEP_Y_Port, STEP_Y_Pin, GPIO_PIN_RESET);
+        delay_us(y_between_us);
+    }
+
+    //Home X axis
+    while (HAL_GPIO_ReadPin(LIMIT_X_Port, LIMIT_X_Pin) == GPIO_PIN_SET) {
+        HAL_GPIO_WritePin(STEP_X_Port, STEP_X_Pin, GPIO_PIN_SET);
+        delay_us(pulse_high_us);
+        HAL_GPIO_WritePin(STEP_X_Port, STEP_X_Pin, GPIO_PIN_RESET);
+        delay_us(x_between_us);
+    }
+}
+static void Task_Once_StorageInit(void)
+{
+  if (oneTimeDone) return;
+  FRESULT fr;
+
+      if (!s_sdReady)
+      {
+          MX_FATFS_Init();
+
+          HAL_Delay(500); // allow SD card power to stabilize
+
+          fr = f_mount(&s_fs, "", 1);
+          USB_Printf("f_mount result = %d\r\n", fr);
+
+          if (fr == FR_OK)
+          {
+              fr = f_open(&s_file, "PrintTask.csv", FA_READ);
+
+              USB_Printf("f_open result = %d\r\n", fr);
+
+              if (fr == FR_OK)
+              {
+                  s_sdReady = 1;
+                  s_headerSkipped = 0;
+
+                  USB_Printf("SD card ready\r\n");
+              }
+              else
+              {
+                  USB_Printf("Failed to open CSV\r\n");
+              }
+          }
+          else
+          {
+              USB_Printf("Failed to mount SD\r\n");
+          }
+      }
+  oneTimeDone = 1;
+}
+static void Task_ReadSD(void)
+{
+  /* Read at 20 Hz */
+  uint32_t now = HAL_GetTick();
+  if ((now - s_lastSDms) < 50U) return;
+  s_lastSDms = now;
+  if (!s_sdReady) return;                 // not mounted/opened
+
+  for (int tries = 0; tries < 8; ++tries)  // small chunk per call to stay snappy
+  {
+    TCHAR* res = f_gets(s_line, sizeof(s_line), &s_file);
+    if (!res) {
+      /* EOF or read error: stop feeding (or rewind to loop the job) */
+      // f_lseek(&s_file, 0);
+      // s_headerSkipped = 0;
+      return;
+    }
+
+    /* Save the FULL line length BEFORE trimming — for correct rewind on queue-full */
+    FSIZE_t full_len = (FSIZE_t)strlen(s_line);
+
+    /* Trim leading spaces and optional UTF-8 BOM on the very first line */
+    char *p = s_line;
+    if (!s_headerSkipped && (unsigned char)p[0]==0xEF && (unsigned char)p[1]==0xBB && (unsigned char)p[2]==0xBF) {
+      p += 3; // skip BOM
+    }
+    while (*p==' ' || *p=='\t') ++p;
+
+    /* Skip blank lines / comments */
+    if (*p=='\0' || *p=='\r' || *p=='\n' || *p=='#' || *p==';') continue;
+
+    /* Skip header row once (starts with 'X' or 'x') */
+    if (!s_headerSkipped) {
+      s_headerSkipped = 1;
+      if (p[0]=='X' || p[0]=='x') continue;
+    }
+
+    /* Parse CSV: X,Y,Z,Speed,E,Mode,NozzleTemp */
+    float X=0, Y=0, Z=0, Speed=0, E=0, NozT=0;
+    int   Mode=0;
+
+    int n = sscanf(p, " %f , %f , %f , %f , %f , %d , %f",
+                   &X,   &Y,   &Z,   &Speed, &E,   &Mode, &NozT);
+
+    /* Require ALL 7 fields; anything else is malformed => skip safely */
+    if (n != 7 || (Mode != 0 && Mode != 1)) {
+      continue;
+    }
+
+    setNozTempCmd = NozT;  // stash latest temp command
+
+    /* Queue the motion. If queue is full, rewind exactly the full line length. */
+    bool ok = (Mode == 0)
+      ? Stepper_QueueAbs(X, Y, Z, E, Speed)   // signature: (X,Y,Z,E,Speed)
+      : Stepper_QueueRel(X, Y, Z, E, Speed);
+
+    if (!ok) {
+    	if (!ok) {
+    	  FSIZE_t cur = f_tell(&s_file);
+
+    	  USB_Printf("QUEUE FULL: file pos=%lu, line='%s'\r\n",
+    	             (unsigned long)cur, s_line);
+
+    	  if (cur >= full_len) {
+    	    f_lseek(&s_file, cur - full_len);
+    	  }
+
+    	  break;// stop feeding this cycle
+    	}
+    }
+  }
+
+}
+
+static void USB_Printf(const char *fmt, ...)
+{
+  static char buf[512];
+  va_list ap;
+  va_start(ap, fmt);
+  int n = vsnprintf(buf, sizeof(buf), fmt, ap);
+  va_end(ap);
+  if (n < 0) return;
+  if (n >= (int)sizeof(buf)) n = (int)sizeof(buf) - 1;
+  (void)CDC_Transmit_FS((uint8_t*)buf, (uint16_t)n);
+}
+
+static void Task_PIDandStreamUSB(void)
+{
+  uint32_t now = HAL_GetTick();
+
+  if ((now - lastUsbTxMs) >= 1000U)   // 1 Hz PID loop
+  {
+    float dt = (now - lastUsbTxMs) / 1000.0f;
+    if (dt <= 0.0f) dt = 1.0f;
+
+    float temp = MAX6675_ReadTemp();
+
+    if (temp < 0.0f)
+    {
+      nozDutyCmd = 0.0f;
+      pid_integral = 0.0f;
+      pid_prevError = 0.0f;
+      pid_firstRun = 1;
+
+      USB_Printf("Thermocouple open - heater OFF\r\n");
+    }
+    else
+    {
+      tempsC[0] = temp;
+
+      /* If no valid setpoint, keep heater off */
+      if (setNozTempCmd <= 0.0f)
+      {
+        nozDutyCmd = 0.0f;
+        pid_integral = 0.0f;
+        pid_prevError = 0.0f;
+        pid_firstRun = 1;
+      }
+      else
+      {
+        float error = setNozTempCmd - temp;
+
+        /* Safety cutoff: too hot */
+        if (temp > setNozTempCmd + 20.0f)
+        {
+          nozDutyCmd = 0.0f;
+          pid_integral = 0.0f;
+        }
+        else
+        {
+          float derivative = 0.0f;
+
+          if (pid_firstRun)
+          {
+            derivative = 0.0f;
+            pid_prevError = error;
+            pid_firstRun = 0;
+          }
+          else
+          {
+            derivative = (error - pid_prevError) / dt;
+          }
+
+          /* Integral with basic anti-windup */
+          pid_integral += error * dt;
+
+          if (pid_integral > 200.0f) pid_integral = 200.0f;
+          if (pid_integral < -200.0f) pid_integral = -200.0f;
+
+          float output = (pid_Kp * error)
+                       + (pid_Ki * pid_integral)
+                       + (pid_Kd * derivative);
+
+          if (output > 100.0f) output = 100.0f;
+          if (output < 0.0f)   output = 0.0f;
+
+          nozDutyCmd = output;
+          pid_prevError = error;
+        }
+      }
+
+      USB_Printf("Set=%.2f C, Temp=%.2f C, Duty=%.1f %%\r\n",
+                 setNozTempCmd, temp, nozDutyCmd);
+    }
+
+    lastUsbTxMs = now;
+  }
+}
+
+static void Task_UpdatePWMs(void)
+{
+  uint32_t now = HAL_GetTick();
+  if ((now - lastPwmUpdateMs) >= 50U) {
+    static uint16_t t = 0;
+    t = (uint16_t)((t + 1) % 200);
+
+    /* PB5 (TIM3_CH2): set heater to 50 Hz */
+    float dutyA  = nozDutyCmd;
+
+    /* PB6 (TIM4_CH1): turn on fan fully */
+    float dutyB  = 100.0f;
+
+    /* PB7 (TIM4_CH2): Curing light protocol */
+    float phaseC = (float)t * 2.0f;                  // 0..398 (since t is 0..199)
+    if (phaseC > 200.0f) phaseC = 400.0f - phaseC;   // fold to 0..200
+    float dutyC  = (phaseC <= 100.0f) ? phaseC : (200.0f - phaseC);
+
+
+    Mosfet_SetDuty(MOSFET_NOZZLE, dutyA);
+    Mosfet_SetDuty(MOSFET_FAN,    dutyB);
+    Mosfet_SetDuty(MOSFET_UV,     dutyC);
+
+    lastPwmUpdateMs = now;
+  }
+}
+
+uint16_t MAX6675_ReadRaw(void)
+{
+    uint16_t raw_data;
+
+    HAL_GPIO_WritePin(GPIOE, GPIO_PIN_6, GPIO_PIN_RESET);   // CS low
+    //HAL_Delay(1);
+
+    HAL_SPI_TransmitReceive(&hspi3, tx_buf, rx_buf, 2, HAL_MAX_DELAY);
+
+    HAL_GPIO_WritePin(GPIOE, GPIO_PIN_6, GPIO_PIN_SET);     // CS high
+
+    raw_data = (rx_buf[0] << 8) | rx_buf[1];
+
+    return raw_data;
+}
+
+float MAX6675_ReadTemp(void)
+{
+    uint16_t raw = MAX6675_ReadRaw();
+
+    if (raw & 0x0004)   // thermocouple open
+    {
+        return -1.0f;
+    }
+
+    raw >>= 3;          // remove lower 3 bits
+
+    return raw * 0.25f;
+}
+
+void SystemTasks(void)
+{
+  Task_Once_StorageInit();
+  Task_ReadSD();
+  //Task_SampleSensors();
+  Task_PIDandStreamUSB();
+  Task_UpdatePWMs();
+}
+/* USER CODE END 4 */
+
+/**
+  * @brief  This function is executed in case of error occurrence.
+  * @retval None
+  */
+void Error_Handler(void)
+{
+  /* USER CODE BEGIN Error_Handler_Debug */
+  /* User can add his own implementation to report the HAL error return state */
+  __disable_irq();
+  while (1)
+  {
+  }
+  /* USER CODE END Error_Handler_Debug */
+}
+
+#ifdef  USE_FULL_ASSERT
+/**
+  * @brief  Reports the name of the source file and the source line number
+  *         where the assert_param error has occurred.
+  * @param  file: pointer to the source file name
+  * @param  line: assert_param error line source number
+  * @retval None
+  */
+void assert_failed(uint8_t *file, uint32_t line)
+{
+  /* USER CODE BEGIN 6 */
+  /* User can add his own implementation to report the file name and line number,
+     ex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
+  /* USER CODE END 6 */
+}
+#endif /* USE_FULL_ASSERT */

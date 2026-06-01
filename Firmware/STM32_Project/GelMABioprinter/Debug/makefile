@@ -68,8 +68,8 @@ all: main-build
 main-build: GelMABioprinter.elf secondary-outputs
 
 # Tool invocations
-GelMABioprinter.elf GelMABioprinter.map: $(OBJS) $(USER_OBJS) C:\Users\Simon\Projects\Hydrogel-3D-Printer\Firmware\STM32_Project\GelMABioprinter\STM32F407VGTX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "GelMABioprinter.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\Simon\Projects\Hydrogel-3D-Printer\Firmware\STM32_Project\GelMABioprinter\STM32F407VGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="GelMABioprinter.map" -Wl,--gc-sections -static -u _scanf_float --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -Wl,--start-group -lc -lm -Wl,--end-group
+GelMABioprinter.elf GelMABioprinter.map: $(OBJS) $(USER_OBJS) C:\Users\Simon\Projects\BEng\ Mechatronics\Hydrogel-3D-Printer\Firmware\STM32_Project\GelMABioprinter\STM32F407VGTX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "GelMABioprinter.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\Simon\Projects\BEng Mechatronics\Hydrogel-3D-Printer\Firmware\STM32_Project\GelMABioprinter\STM32F407VGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="GelMABioprinter.map" -Wl,--gc-sections -static -u _scanf_float --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 

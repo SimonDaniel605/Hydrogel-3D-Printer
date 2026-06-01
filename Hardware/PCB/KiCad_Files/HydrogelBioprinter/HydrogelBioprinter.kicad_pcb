@@ -1738,7 +1738,7 @@
 			(uuid "e62289b5-d915-4bcf-9740-909f6cc0fe6e")
 		)
 		(embedded_fonts no)
-		(model "C:/Users/Simon/Projects/Hydrogel-3D-Printer/Hardware/PCB/KiCad_Files/Library/PPTC081LFBN-RC--3DModel-STEP-269445.STEP"
+		(model "C:/Users/Simon/Projects/BEng Mechatronics/Hydrogel-3D-Printer/Hardware/PCB/KiCad_Files/Library/PPTC081LFBN-RC--3DModel-STEP-269445.STEP"
 			(offset
 				(xyz 12.65 -8.88 0)
 			)
@@ -1749,7 +1749,7 @@
 				(xyz -90 -0 -90)
 			)
 		)
-		(model "C:/Users/Simon/Projects/Hydrogel-3D-Printer/Hardware/PCB/KiCad_Files/Library/PPTC081LFBN-RC--3DModel-STEP-269445.STEP"
+		(model "C:/Users/Simon/Projects/BEng Mechatronics/Hydrogel-3D-Printer/Hardware/PCB/KiCad_Files/Library/PPTC081LFBN-RC--3DModel-STEP-269445.STEP"
 			(offset
 				(xyz 0 -8.88 0)
 			)
@@ -1760,7 +1760,7 @@
 				(xyz -90 -0 -90)
 			)
 		)
-		(model "C:/Users/Simon/Projects/Hydrogel-3D-Printer/Hardware/PCB/KiCad_Files/Library/A4988 STEPPER MOTOR DRIVER CARRIER--3DModel-STEP-56544.STEP"
+		(model "C:/Users/Simon/Projects/BEng Mechatronics/Hydrogel-3D-Printer/Hardware/PCB/KiCad_Files/Library/A4988 STEPPER MOTOR DRIVER CARRIER--3DModel-STEP-56544.STEP"
 			(offset
 				(xyz 6.35 -8.85 8.5)
 			)
@@ -3316,7 +3316,7 @@
 			(uuid "200c4171-e4a1-4b47-9bd2-5cff325ed099")
 		)
 		(embedded_fonts no)
-		(model "C:/Users/Simon/Projects/Hydrogel-3D-Printer/Hardware/PCB/KiCad_Files/Library/PPTC081LFBN-RC--3DModel-STEP-269445.STEP"
+		(model "C:/Users/Simon/Projects/BEng Mechatronics/Hydrogel-3D-Printer/Hardware/PCB/KiCad_Files/Library/PPTC081LFBN-RC--3DModel-STEP-269445.STEP"
 			(offset
 				(xyz 0 -8.88 0)
 			)
@@ -3327,7 +3327,7 @@
 				(xyz -90 -0 -90)
 			)
 		)
-		(model "C:/Users/Simon/Projects/Hydrogel-3D-Printer/Hardware/PCB/KiCad_Files/Library/PPTC081LFBN-RC--3DModel-STEP-269445.STEP"
+		(model "C:/Users/Simon/Projects/BEng Mechatronics/Hydrogel-3D-Printer/Hardware/PCB/KiCad_Files/Library/PPTC081LFBN-RC--3DModel-STEP-269445.STEP"
 			(offset
 				(xyz 12.65 -8.88 0)
 			)
@@ -3338,7 +3338,7 @@
 				(xyz -90 -0 -90)
 			)
 		)
-		(model "C:/Users/Simon/Projects/Hydrogel-3D-Printer/Hardware/PCB/KiCad_Files/Library/A4988 STEPPER MOTOR DRIVER CARRIER--3DModel-STEP-56544.STEP"
+		(model "C:/Users/Simon/Projects/BEng Mechatronics/Hydrogel-3D-Printer/Hardware/PCB/KiCad_Files/Library/A4988 STEPPER MOTOR DRIVER CARRIER--3DModel-STEP-56544.STEP"
 			(offset
 				(xyz 6.35 -8.85 8.5)
 			)
@@ -14169,7 +14169,7 @@
 			(uuid "71d3fc4b-4202-4ebf-b143-721d410f894f")
 		)
 		(embedded_fonts no)
-		(model "C:/Users/Simon/Projects/Hydrogel-3D-Printer/Hardware/PCB/KiCad_Files/Library/PPTC081LFBN-RC--3DModel-STEP-269445.STEP"
+		(model "C:/Users/Simon/Projects/BEng Mechatronics/Hydrogel-3D-Printer/Hardware/PCB/KiCad_Files/Library/PPTC081LFBN-RC--3DModel-STEP-269445.STEP"
 			(offset
 				(xyz 12.65 -8.88 0)
 			)
@@ -14180,7 +14180,7 @@
 				(xyz -90 -0 90)
 			)
 		)
-		(model "C:/Users/Simon/Projects/Hydrogel-3D-Printer/Hardware/PCB/KiCad_Files/Library/PPTC081LFBN-RC--3DModel-STEP-269445.STEP"
+		(model "C:/Users/Simon/Projects/BEng Mechatronics/Hydrogel-3D-Printer/Hardware/PCB/KiCad_Files/Library/PPTC081LFBN-RC--3DModel-STEP-269445.STEP"
 			(offset
 				(xyz 0 -8.8 0)
 			)
@@ -14191,7 +14191,7 @@
 				(xyz -90 -0 -90)
 			)
 		)
-		(model "C:/Users/Simon/Projects/Hydrogel-3D-Printer/Hardware/PCB/KiCad_Files/Library/A4988 STEPPER MOTOR DRIVER CARRIER--3DModel-STEP-56544.STEP"
+		(model "C:/Users/Simon/Projects/BEng Mechatronics/Hydrogel-3D-Printer/Hardware/PCB/KiCad_Files/Library/A4988 STEPPER MOTOR DRIVER CARRIER--3DModel-STEP-56544.STEP"
 			(offset
 				(xyz 6.35 -8.85 8.5)
 			)
@@ -30838,7 +30838,7 @@
 			(uuid "845d63e3-0a75-4e32-a543-629dc35da333")
 		)
 		(embedded_fonts no)
-		(model "C:/Users/Simon/Projects/Hydrogel-3D-Printer/Hardware/PCB/KiCad_Files/Library/A4988 STEPPER MOTOR DRIVER CARRIER--3DModel-STEP-56544.STEP"
+		(model "C:/Users/Simon/Projects/BEng Mechatronics/Hydrogel-3D-Printer/Hardware/PCB/KiCad_Files/Library/A4988 STEPPER MOTOR DRIVER CARRIER--3DModel-STEP-56544.STEP"
 			(offset
 				(xyz 6.35 -8.85 8.5)
 			)
@@ -30849,7 +30849,7 @@
 				(xyz -90 -0 -180)
 			)
 		)
-		(model "C:/Users/Simon/Projects/Hydrogel-3D-Printer/Hardware/PCB/KiCad_Files/Library/PPTC081LFBN-RC--3DModel-STEP-269445.STEP"
+		(model "C:/Users/Simon/Projects/BEng Mechatronics/Hydrogel-3D-Printer/Hardware/PCB/KiCad_Files/Library/PPTC081LFBN-RC--3DModel-STEP-269445.STEP"
 			(offset
 				(xyz 0 -8.88 0)
 			)
@@ -30860,7 +30860,7 @@
 				(xyz -90 -0 -90)
 			)
 		)
-		(model "C:/Users/Simon/Projects/Hydrogel-3D-Printer/Hardware/PCB/KiCad_Files/Library/PPTC081LFBN-RC--3DModel-STEP-269445.STEP"
+		(model "C:/Users/Simon/Projects/BEng Mechatronics/Hydrogel-3D-Printer/Hardware/PCB/KiCad_Files/Library/PPTC081LFBN-RC--3DModel-STEP-269445.STEP"
 			(offset
 				(xyz 12.65 -8.88 0)
 			)
